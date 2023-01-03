@@ -17,10 +17,10 @@ samples, guidance on mobile development, and a full API reference.
 # screen-shots
 
 ## Mobile
-![alt text](https://github.com/Carranza32/repla-vinos/blob/main/assets/login_mobile?raw=true)
-![alt text](https://github.com/Carranza32/repla-vinos/blob/main/assets/register_mobile?raw=true)
-![alt text](https://github.com/Carranza32/repla-vinos/blob/main/assets/form_mobile?raw=true)
+![alt text](https://github.com/Carranza32/repla-vinos/blob/main/assets/login_mobile.png?raw=true)
+![alt text](https://github.com/Carranza32/repla-vinos/blob/main/assets/register_mobile.png?raw=true)
+![alt text](https://github.com/Carranza32/repla-vinos/blob/main/assets/form_mobile.png?raw=true)
 
 ## Web
-![alt text](https://github.com/Carranza32/repla-vinos/blob/main/assets/Login_web?raw=true)
+![alt text](https://github.com/Carranza32/repla-vinos/blob/main/assets/Login_web.JPG?raw=true)
 ![alt text](https://github.com/Carranza32/repla-vinos/blob/main/assets/Form_web.JPG?raw=true)

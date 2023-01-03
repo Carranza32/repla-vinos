@@ -14,4 +14,13 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-# repla-vinos
+# screen-shots
+
+## Mobile
+![alt text](https://github.com/Carranza32/repla-vinos/tree/main/assets/login_mobile?raw=true)
+![alt text](https://github.com/Carranza32/repla-vinos/tree/main/assets/register_mobile?raw=true)
+![alt text](https://github.com/Carranza32/repla-vinos/tree/main/assets/form_mobile?raw=true)
+
+## Web
+![alt text](https://github.com/Carranza32/repla-vinos/tree/main/assets/Login_web?raw=true)
+![alt text](https://github.com/Carranza32/repla-vinos/tree/main/assets/Form_web?raw=true)

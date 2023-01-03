@@ -222,45 +222,45 @@ class FormCalculationScreen extends StatelessWidget {
 	// form Button
 	Widget _formButton(context) {
 		return Container(
-            height: 60,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(1, 183, 97, 1),
-                  Color.fromRGBO(1, 183, 97, 1),
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(25.0),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromRGBO(1, 183, 97, 0.5),
-                  spreadRadius: 1,
-                  blurRadius: 15,
-                  offset: Offset(0, 5),
-                )
-              ]
-            ),
-            child: Center(
-              child: GestureDetector(
-                onTap: () {},
-                child: const Text(
-                  'Calcular',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: "Netflix",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                    letterSpacing: 0.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          );
+			height: 60,
+			decoration: const BoxDecoration(
+				gradient: LinearGradient(
+					colors: [
+					Color.fromRGBO(1, 183, 97, 1),
+					Color.fromRGBO(1, 183, 97, 1),
+					],
+					begin: Alignment.centerLeft,
+					end: Alignment.centerRight,
+				),
+				borderRadius: BorderRadius.all(
+					Radius.circular(25.0),
+				),
+				boxShadow: [
+					BoxShadow(
+					color: Color.fromRGBO(1, 183, 97, 0.5),
+					spreadRadius: 1,
+					blurRadius: 15,
+					offset: Offset(0, 5),
+					)
+				]
+			),
+			child: Center(
+				child: GestureDetector(
+					onTap: () {},
+					child: const Text(
+					'Calcular',
+					textAlign: TextAlign.left,
+					style: TextStyle(
+						fontFamily: "Netflix",
+						fontWeight: FontWeight.w600,
+						fontSize: 18,
+						letterSpacing: 0.0,
+						color: Colors.white,
+					),
+					),
+				),
+			),
+		);
 	}
 
 	Widget _drawer(context){

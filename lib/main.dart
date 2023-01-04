@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:repla_vinos/screens/index.dart';
+import 'package:repla_vinos/screens/intro/intro_slider.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
 			debugShowCheckedModeBanner: false,
 			title: 'Repla Vinos',
 			routes: {
-				'/': (context) => const LoginView(),
+				'/': (context) => const IntroSlider(),
+        'login': (context) => const LoginView(),
 				'signup': (context) => const SignUpView(),
 				'form_calculation': (context) => const FormCalculationScreen(),
 			},

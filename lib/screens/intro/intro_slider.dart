@@ -19,7 +19,8 @@ class IntroSlider extends StatelessWidget {
         builder: (context) => IntroViewsFlutter(
           pages,
           onTapDoneButton: () {
-           Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginView()),);
+           //Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginView()),);
+           Navigator.pushNamed(context, 'login');
           },
           pageButtonTextStyles: const TextStyle(
             color: Colors.white,

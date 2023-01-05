@@ -1,28 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:repla_vinos/controllers/auth_controller.dart';
 import 'package:lottie/lottie.dart';
 import '../../constants.dart';
+import 'package:repla_vinos/utils/validations.dart';
 
-class LoginView extends StatefulWidget {
-	const LoginView({Key? key}) : super(key: key);
+class LoginScreen extends StatelessWidget {
+	final AuthController authController = Get.put(AuthController());
+  	final _formKey = GlobalKey<FormState>();
 
-	@override
-	State<LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
-	TextEditingController nameController = TextEditingController();
-	TextEditingController emailController = TextEditingController();
-	TextEditingController passwordController = TextEditingController();
-
-	final _formKey = GlobalKey<FormState>();
-
-	@override
-	void dispose() {
-		nameController.dispose();
-		emailController.dispose();
-		passwordController.dispose();
-		super.dispose();
-	}
+  	LoginScreen({super.key});
 
 	@override
 	Widget build(BuildContext context) {
@@ -31,17 +18,17 @@ class _LoginViewState extends State<LoginView> {
 		return GestureDetector(
 			onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
 			child: Scaffold(
-			backgroundColor: Colors.white,
-			resizeToAvoidBottomInset: false,
-			body: LayoutBuilder(
-				builder: (context, constraints) {
-					if (constraints.maxWidth > 600) {
-					return _buildLargeScreen(size);
-					} else {
-					return _buildSmallScreen(size);
-					}
-				},
-			),
+				backgroundColor: Colors.white,
+				resizeToAvoidBottomInset: false,
+				body: LayoutBuilder(
+					builder: (context, constraints) {
+						if (constraints.maxWidth > 600) {
+						return _buildLargeScreen(size);
+						} else {
+						return _buildSmallScreen(size);
+						}
+					},
+				),
 			),
 		);
 	}
@@ -122,12 +109,13 @@ class _LoginViewState extends State<LoginView> {
 						key: _formKey,
 						child: Column(
 							children: [
-								/// username or Gmail
 								TextFormField(
+									keyboardType: TextInputType.emailAddress,
 									style: kTextFormFieldStyle(),
 									decoration: const InputDecoration(
 										prefixIcon: Icon(Icons.person),
-										hintText: 'Username or Gmail',
+										labelText: 'Email',
+										hintText: 'Ingrese su email',
 										focusedBorder: OutlineInputBorder(
 											borderSide: BorderSide(color: Color(0xff4bbf78), width: 2.0),
 											borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -136,18 +124,8 @@ class _LoginViewState extends State<LoginView> {
 											borderRadius: BorderRadius.all(Radius.circular(15)),
 										),
 									),
-									controller: nameController,
-									// The validator receives the text that the user has entered.
-									validator: (value) {
-										if (value == null || value.isEmpty) {
-											return 'Please enter username';
-										} else if (value.length < 4) {
-											return 'at least enter 4 characters';
-										} else if (value.length > 13) {
-											return 'maximum character is 13';
-										}
-										return null;
-									},
+									controller: authController.emailTextController,
+									validator: (value) => (value!.isMyEmail) ? null : 'Email no valido',
 								),
 								SizedBox(
 									height: size.height * 0.02,
@@ -156,10 +134,11 @@ class _LoginViewState extends State<LoginView> {
 								/// password
 								TextFormField(
 									style: kTextFormFieldStyle(),
-									controller: passwordController,
+									controller: authController.passwordTextController,
 									decoration: const InputDecoration(
 										prefixIcon: Icon(Icons.lock_open),
-										hintText: "Password",
+										hintText: "Ingrese su clave",
+										labelText: "Clave",
 										focusedBorder: OutlineInputBorder(
 											borderSide: BorderSide(color: Color(0xff4bbf78), width: 2.0),
 											borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -169,23 +148,14 @@ class _LoginViewState extends State<LoginView> {
 										),
 									),
 									// The validator receives the text that the user has entered.
-									validator: (value) {
-										if (value == null || value.isEmpty) {
-											return 'Please enter some text';
-										} else if (value.length < 7) {
-											return 'at least enter 6 characters';
-										} else if (value.length > 13) {
-											return 'maximum character is 13';
-										}
-										return null;
-									},
+									validator: (value) => (value!.isMinString) ? null : 'Debe ser un número de 8 dígitos.'
 								),
 
 								SizedBox(
 									height: size.height * 0.01,
 								),
 								Text(
-									'Creating an account means you\'re okay with our Terms of Services and our Privacy Policy',
+									'Crear una cuenta significa que está de acuerdo con nuestros Términos de servicio y nuestra Política de privacidad',
 									style: kLoginTermsAndPrivacyStyle(size),
 									textAlign: TextAlign.center,
 								),
@@ -202,19 +172,20 @@ class _LoginViewState extends State<LoginView> {
 								/// Navigate To Login Screen
 								GestureDetector(
 									onTap: () {
-										Navigator.pushNamed(context, 'signup');
-										nameController.clear();
-										emailController.clear();
-										passwordController.clear();
+										Get.toNamed("signup");
+
+										authController.emailTextController.clear();
+										authController.passwordTextController.clear();
+										
 										_formKey.currentState?.reset();
 									},
 									child: RichText(
 										text: TextSpan(
-											text: 'Don\'t have an account?',
+											text: '¿No tienes una cuenta?',
 											style: kHaveAnAccountStyle(size),
 											children: [
 												TextSpan(
-													text: " Sign up",
+													text: " Registrarme",
 													style: kLoginOrSignUpTextStyle(
 														size,
 													),
@@ -244,11 +215,11 @@ class _LoginViewState extends State<LoginView> {
 					),
 				),
 				onPressed: () {
-					// Validate returns true if the form is valid, or false otherwise.
-					// if (_formKey.currentState!.validate()) {
-					// 	// ... Navigate To your Home Page
-					// }
-					Navigator.pushReplacementNamed(context, 'form_calculation');
+					if (_formKey.currentState!.validate()) {
+						authController.login();
+					}
+
+					Get.offAllNamed("form_calculation");
 				},
 				child: const Text('Iniciar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
 			),

@@ -1,16 +1,20 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:repla_vinos/constants.dart';
+import 'package:repla_vinos/controllers/calculation_controller.dart';
 import 'package:select_dialog/select_dialog.dart';
 
 class FormCalculationScreen extends StatelessWidget {
-  	const FormCalculationScreen({Key? key}) : super(key: key);
+	final CalculationController calculationController = Get.put(CalculationController());
+  	final _formKey = GlobalKey<FormState>();
+
+  	FormCalculationScreen({Key? key}) : super(key: key);
+
 	@override
 	Widget build(BuildContext context) {
-
-		TextEditingController _date = TextEditingController();
-		String plaguicida= "No value selected";
 		final textTheme = Theme.of(context).textTheme;
 
 		return SafeArea(
@@ -37,16 +41,9 @@ class FormCalculationScreen extends StatelessWidget {
 									const SizedBox(height: 15),
 
 									TextField(
-										controller: _date,
-										decoration: const InputDecoration(
-											labelText: 'Fecha Aplicacion',
-											labelStyle: TextStyle(color: Color(0xff111b31)),
-											prefixIcon: Icon(Icons.calendar_today, color: Color(0xff111b31)),
-											filled: true,
-											border: OutlineInputBorder(
-												borderRadius: BorderRadius.all(Radius.circular(10.0)),
-												borderSide: BorderSide.none,
-											),
+										controller: calculationController.fechaTextController,
+										decoration: formFieldStyle().copyWith(
+											labelText: 'Fecha',											
 										),
 										onTap: () {
 											showDatePicker(
@@ -55,7 +52,7 @@ class FormCalculationScreen extends StatelessWidget {
 												firstDate: DateTime(2000),
 												lastDate: DateTime(2100),
 											).then((date) {
-												_date.text = DateFormat('dd/MM/yyyy').format(date!);
+												calculationController.fechaTextController.text = DateFormat('dd/MM/yyyy').format(date!);
 											});
 										},
 									),
@@ -67,35 +64,27 @@ class FormCalculationScreen extends StatelessWidget {
 									const SizedBox(height: 15),
 
 									TextField(
-										decoration: const InputDecoration(
-											labelText: 'Diametro',
-											labelStyle: TextStyle(color: Color(0xff111b31)),
-											filled: true,
-											border: OutlineInputBorder(
-												borderRadius: BorderRadius.all(Radius.circular(10.0)),
-												borderSide: BorderSide.none,
-											),
+										decoration: formFieldStyle().copyWith(
+											labelText: 'Diametro',											
 										),
 										keyboardType: const TextInputType.numberWithOptions(decimal: true),
-										onTap: () {
-											
-										},
 									),
 
 									const SizedBox(height: 20),
 
 									Text('Plaguicida', style: textTheme.headline6),
 
-									DropdownButton(
-										isExpanded: true,								
-										items: List.generate(50, (index) => "Item $index").map((e) => DropdownMenuItem(
-											value: e,
-											child: Text(e),
-										)).toList(),
-										onChanged: (value) {
-											plaguicida = value.toString();
-										},
-									),
+									// DropdownButton(
+									// 	value: calculationController.plaguicidaTextController.text,
+									// 	isExpanded: true,								
+									// 	items: List.generate(50, (index) => "Item $index").map((e) => DropdownMenuItem(
+									// 		value: e,
+									// 		child: Text(e),
+									// 	)).toList(),
+									// 	onChanged: (value) {
+									// 		calculationController.plaguicidaTextController.text = value.toString();
+									// 	},
+									// ),
 
 									const SizedBox(height: 20),
 
@@ -104,19 +93,11 @@ class FormCalculationScreen extends StatelessWidget {
 									const SizedBox(height: 15),
 
 									TextField(
-										decoration: const InputDecoration(
-											labelText: 'Dosis',
-											labelStyle: TextStyle(color: Color(0xff111b31)),
-											filled: true,
-											border: OutlineInputBorder(
-												borderRadius: BorderRadius.all(Radius.circular(10.0)),
-												borderSide: BorderSide.none,
-											),
+										controller: calculationController.dosisTextController,
+										decoration: formFieldStyle().copyWith(
+											labelText: 'Dosis',											
 										),
 										keyboardType: const TextInputType.numberWithOptions(decimal: true),
-										onTap: () {
-											
-										},
 									),
 
 									const SizedBox(height: 15),
@@ -178,6 +159,7 @@ class FormCalculationScreen extends StatelessWidget {
 				  			const SizedBox(height: 20),
 
 				  			CustomSlidingSegmentedControl(
+								controller: calculationController.vinoTextController,
 				  				isStretch: true,
 				  				initialValue: 1,
 				  				children: const {

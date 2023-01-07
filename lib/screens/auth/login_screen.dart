@@ -93,13 +93,13 @@ class LoginScreen extends StatelessWidget {
 				const SizedBox(
 					height: 10,
 				),
-				Padding(
-					padding: const EdgeInsets.only(left: 20.0),
-					child: Text(
-						'Welcome Back Catchy',
-						style: kLoginSubtitleStyle(size),
-					),
-				),
+				// Padding(
+				// 	padding: const EdgeInsets.only(left: 20.0),
+				// 	child: Text(
+				// 		'Welcome Back Catchy',
+				// 		style: kLoginSubtitleStyle(size),
+				// 	),
+				// ),
 				SizedBox(
 					height: size.height * 0.03,
 				),
@@ -107,6 +107,7 @@ class LoginScreen extends StatelessWidget {
 					padding: const EdgeInsets.only(left: 20.0, right: 20),
 					child: Form(
 						key: _formKey,
+						autovalidateMode: AutovalidateMode.onUserInteraction,
 						child: Column(
 							children: [
 								TextFormField(
@@ -148,7 +149,7 @@ class LoginScreen extends StatelessWidget {
 										),
 									),
 									// The validator receives the text that the user has entered.
-									validator: (value) => (value!.isMinString) ? null : 'Debe ser un número de 8 dígitos.'
+									// validator: (value) => (value!.isMinString) ? null : 'Debe ser un número de 8 dígitos.'
 								),
 
 								SizedBox(
@@ -218,8 +219,6 @@ class LoginScreen extends StatelessWidget {
 					if (_formKey.currentState!.validate()) {
 						authController.login();
 					}
-
-					Get.offAllNamed("form_calculation");
 				},
 				child: const Text('Iniciar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
 			),

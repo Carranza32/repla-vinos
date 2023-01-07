@@ -6,22 +6,16 @@ import 'package:get_storage/get_storage.dart';
 import 'package:repla_vinos/providers/auth_provider.dart';
 
 class AuthController extends GetxController{
-	late TextEditingController nameTextController;
-	late TextEditingController emailTextController;
-	late TextEditingController passwordTextController;
-	late GetStorage storage = GetStorage();
-	late AuthProvider _authProvider = AuthProvider();
-
-	@override
-	void onInit() {
-		nameTextController = TextEditingController();
-		emailTextController = TextEditingController();
-		passwordTextController = TextEditingController();
-		super.onInit();
-	}
+	final nameTextController = TextEditingController();
+	final emailTextController = TextEditingController();
+	final passwordTextController = TextEditingController();
+	final GetStorage storage = GetStorage();
+	final AuthProvider _authProvider = AuthProvider();
 
 	@override
 	void onReady() {
+		emailTextController.text = "juan2@gmail.com";
+		passwordTextController.text = "111111";
 		checkAuth();
 		super.onReady();
 	}
@@ -51,16 +45,18 @@ class AuthController extends GetxController{
 			barrierDismissible: false
 		);
 
-		final response = await _authProvider.doPost("login", {
-			'email': emailTextController.text,
-			'password': passwordTextController.text
+		final response = await _authProvider.doPost("inicio_sesion", {
+			'usuario[email]': emailTextController.text,
+			'usuario[clave]': passwordTextController.text
 		});
 
 		Get.back();
 
+		print(response.body);
+
 		if (response.isOk && response.body["success"]) {
-			storage.write('token', response.body["token"]);
-			Get.offAllNamed("form_calculation");
+			// storage.write('token', response.body["token"]);
+			// Get.offAllNamed("form_calculation");
 		}else{
 			Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
 		}

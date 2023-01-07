@@ -17,7 +17,7 @@ class Routes {
 		),
 		GetPage(
 			name: '/form_calculation',
-			page: () => const FormCalculationScreen(),
+			page: () => FormCalculationScreen(),
 		),
 	];
 }

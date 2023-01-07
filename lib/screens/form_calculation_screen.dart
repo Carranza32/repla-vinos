@@ -74,17 +74,18 @@ class FormCalculationScreen extends StatelessWidget {
 
 									Text('Plaguicida', style: textTheme.headline6),
 
-									// DropdownButton(
-									// 	value: calculationController.plaguicidaTextController.text,
-									// 	isExpanded: true,								
-									// 	items: List.generate(50, (index) => "Item $index").map((e) => DropdownMenuItem(
-									// 		value: e,
-									// 		child: Text(e),
-									// 	)).toList(),
-									// 	onChanged: (value) {
-									// 		calculationController.plaguicidaTextController.text = value.toString();
-									// 	},
-									// ),
+									DropdownButton(
+										isExpanded: true,								
+										items: calculationController.plaguicidas.map((item) {
+											return DropdownMenuItem(
+												value: item?.id,
+												child: Text(item?.plaguicida ?? ''),
+											);
+										}).toList(),
+										onChanged: (value) {
+											calculationController.plaguicidaTextController.text = value.toString();
+										},
+									),
 
 									const SizedBox(height: 20),
 

@@ -1,15 +1,48 @@
-import 'package:get/get.dart';
+import 'dart:convert';
 
-class AuthProvider extends GetConnect{
+import 'package:http/http.dart' as http;
+import 'package:repla_vinos/models/user_model.dart';
+
+class AuthProvider {
 	// final _baseUrl = "http://wood-chips.herokuapp.com/api/";
 	final _baseUrl = "https://api.replavinos.cl/";
 
-	Future<Response> doPost(String url, Map data) => post(_baseUrl+url, data, headers: _headers());
+	Future<UserModel?> login(Map<String, dynamic> body) async {
+		final response = await http.post(
+			Uri.parse('${_baseUrl}inicio_sesion'),
+			body: body,
+    	);
 
-	_headers(){
-		return {
-			'Content-type' : 'application/json',
-			'Accept' : 'application/json',
-		};
+		if (response.statusCode == 201) {
+			return UserModel.fromJson( jsonDecode(response.body) );
+		}else{
+			return null;
+		}
+	}
+
+	Future<UserModel?> signup(Map<String, dynamic> body) async {
+		final response = await http.post(
+			Uri.parse('${_baseUrl}usuario/registro'),
+			body: body,
+    	);
+
+		if (response.statusCode == 201) {
+			return UserModel.fromJson( jsonDecode(response.body) );
+		}else{
+			return null;
+		}
+	}
+
+	Future<UserModel?> restartPassword(Map<String, dynamic> body) async {
+		final response = await http.post(
+			Uri.parse('${_baseUrl}recuperacion'),
+			body: body,
+    	);
+
+		if (response.statusCode == 201) {
+			return UserModel.fromJson( jsonDecode(response.body) );
+		}else{
+			return null;
+		}
 	}
 }

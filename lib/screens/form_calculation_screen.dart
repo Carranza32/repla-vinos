@@ -257,7 +257,7 @@ class FormCalculationScreen extends StatelessWidget {
 						child: Text('Drawer Header'),
 					),
 					ListTile(
-						title: const Text('Item 1'),
+						title: const Text('Repla vinos'),
 						onTap: () {
 							// Update the state of the app
 							// ...
@@ -266,12 +266,9 @@ class FormCalculationScreen extends StatelessWidget {
 						},
 					),
 					ListTile(
-						title: const Text('Item 2'),
+						title: const Text('Salir'),
 						onTap: () {
-							// Update the state of the app
-							// ...
-							// Then close the drawer
-							Navigator.pop(context);
+							Get.offAllNamed("login");
 						},
 					),
 				],

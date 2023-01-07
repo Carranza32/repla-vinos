@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:repla_vinos/providers/auth_provider.dart';
 
+
 class AuthController extends GetxController{
 	final nameTextController = TextEditingController();
 	final emailTextController = TextEditingController();
@@ -16,21 +17,21 @@ class AuthController extends GetxController{
 	void onReady() {
 		emailTextController.text = "juan2@gmail.com";
 		passwordTextController.text = "111111";
-		checkAuth();
+		// checkAuth();
+		storage.erase();
 		super.onReady();
 	}
 
 	void checkAuth() {
 		try {
-			String token = storage.read('token');
+			var token = storage.read('user');
 
 			if (token != null) {
-				print("Ya estas registrado");
-				print(token);
 				Get.offAllNamed("form_calculation");
 			}else{
-				print("No estas registrado");
+				Get.offAllNamed("login");
 			}
+
 		} catch (e) {
 			print(e.toString());
 		}
@@ -45,18 +46,18 @@ class AuthController extends GetxController{
 			barrierDismissible: false
 		);
 
-		final response = await _authProvider.doPost("inicio_sesion", {
-			'usuario[email]': emailTextController.text,
-			'usuario[clave]': passwordTextController.text
-		});
+		var body = <String, dynamic>{};
+		
+		body['usuario[email]'] = emailTextController.text;
+		body['usuario[clave]'] = passwordTextController.text;
+
+		final response = await _authProvider.login(body);
 
 		Get.back();
 
-		print(response.body);
-
-		if (response.isOk && response.body["success"]) {
-			// storage.write('token', response.body["token"]);
-			// Get.offAllNamed("form_calculation");
+		if (response != null) {
+			storage.write('user', response.usuario![0]);
+			Get.offAllNamed("form_calculation");
 		}else{
 			Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
 		}
@@ -71,17 +72,18 @@ class AuthController extends GetxController{
 			barrierDismissible: false
 		);
 
-		final response = await _authProvider.doPost("register", {
-			'name': nameTextController.text,
-			'email': emailTextController.text,
-			'password': passwordTextController.text,
-		});
+		var body = <String, dynamic>{};
+		
+		body['usuario[email]'] = nameTextController.text;
+		body['usuario[email]'] = emailTextController.text;
+		body['usuario[clave]'] = passwordTextController.text;
+
+		final response = await _authProvider.signup(body);
 
 		Get.back();
 
-		if (response.isOk && response.body["success"]) {
-			print(response.body["token"]);
-			GetStorage().write('token', response.body["token"]);
+		if (response != null) {
+			storage.write('user', response.usuario![0]);
 			Get.offAllNamed("form_calculation");
 		}else{
 			Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
@@ -89,13 +91,13 @@ class AuthController extends GetxController{
 	}
 
 	void resetPassword() async{
-		final response = await _authProvider.doPost("password/email", {
-			'email': emailTextController.text
-		});
+		// final response = await _authProvider.doPost("password/email", {
+		// 	'email': emailTextController.text
+		// });
 
-		if (response.isOk) {
-			Get.rawSnackbar(message: "good_job".tr);
-		}
+		// if (response.isOk) {
+		// 	Get.rawSnackbar(message: "good_job".tr);
+		// }
 	}
 
 	@override

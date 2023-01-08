@@ -23,14 +23,14 @@ class ApiProvider {
 	}
 
 	Future<List<Plaguicida?>?> plaguicidas() async {
-		final response = await http.get(
+		final response = await http.post(
 			Uri.parse('${_baseUrl}plaguicidas'),
 			headers: {
 				HttpHeaders.authorizationHeader: GetStorage().read('user')['llave_api']
 			}
     	);
 
-		if (response.statusCode != 201 || response.statusCode != 200) {
+		if (response.statusCode != 201) {
 			return null;
 		}
 

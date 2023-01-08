@@ -7,6 +7,8 @@ import 'package:repla_vinos/constants.dart';
 import 'package:repla_vinos/controllers/calculation_controller.dart';
 import 'package:select_dialog/select_dialog.dart';
 
+import '../models/plaguidas_model.dart';
+
 class FormCalculationScreen extends StatelessWidget {
 	final CalculationController calculationController = Get.put(CalculationController());
   	final _formKey = GlobalKey<FormState>();
@@ -24,12 +26,15 @@ class FormCalculationScreen extends StatelessWidget {
 				),
 				drawer: _drawer(context),
 				body: SingleChildScrollView(
-					child: Column(
-					  	children: [
-							_header(context, textTheme),							
-					    	SizedBox(
+					child: Form(
+						key: _formKey,
+						autovalidateMode: AutovalidateMode.onUserInteraction,
+						child: Column(
+							children: [
+								_header(context, textTheme, calculationController),							
+								SizedBox(
 								width: MediaQuery.of(context).size.width * 0.93,
-					    	  	child: ListView(
+									child: ListView(
 								primary: false,
 								padding: const EdgeInsets.all(20),
 								shrinkWrap: true,
@@ -40,19 +45,39 @@ class FormCalculationScreen extends StatelessWidget {
 
 									const SizedBox(height: 15),
 
-									TextField(
-										controller: calculationController.fechaTextController,
-										decoration: formFieldStyle().copyWith(
-											labelText: 'Fecha',											
+									GestureDetector(
+										child: TextFormField(
+											controller: calculationController.fechaTextController,
+											enabled: false,
+											decoration: formFieldStyle().copyWith(
+												labelText: 'Fecha',											
+											),
+											validator: (value) => value!.isEmpty ? 'Campo requerido' : null,
 										),
 										onTap: () {
 											showDatePicker(
 												context: context,
-												initialDate: DateTime.now(),
+												initialDate: calculationController.fechaTextController.text.isEmpty ? DateTime.now() : DateFormat('dd/MM/yyyy').parse(calculationController.fechaTextController.text),
 												firstDate: DateTime(2000),
 												lastDate: DateTime(2100),
+												cancelText: 'Cancelar',
+												builder: (context, child) {
+													return Theme(
+														data: Theme.of(context).copyWith(
+															colorScheme: const ColorScheme.light(
+																primary: Color(0xff11ab6a),
+															),
+															buttonTheme: const ButtonThemeData(
+																textTheme: ButtonTextTheme.primary,
+															),
+														),
+														child: child!,
+													);
+												},
 											).then((date) {
-												calculationController.fechaTextController.text = DateFormat('dd/MM/yyyy').format(date!);
+												if (date != null) {
+													calculationController.fechaTextController.text = DateFormat('dd/MM/yyyy').format(date);
+												}
 											});
 										},
 									),
@@ -63,27 +88,44 @@ class FormCalculationScreen extends StatelessWidget {
 
 									const SizedBox(height: 15),
 
-									TextField(
+									TextFormField(
+										controller: calculationController.diametroTextController,
 										decoration: formFieldStyle().copyWith(
 											labelText: 'Diametro',											
 										),
 										keyboardType: const TextInputType.numberWithOptions(decimal: true),
+										inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}'))],
+										validator: (value) => value!.isEmpty ? 'Campo requerido' : null,
 									),
 
 									const SizedBox(height: 20),
 
 									Text('Plaguicida', style: textTheme.headline6),
 
-									DropdownButton(
-										isExpanded: true,								
-										items: calculationController.plaguicidas.map((item) {
-											return DropdownMenuItem(
-												value: item?.id,
-												child: Text(item?.plaguicida ?? ''),
+									const SizedBox(height: 20),
+
+									GestureDetector(
+										child: TextFormField(
+											controller: calculationController.plaguicidaTextController,
+											enabled: false,
+											decoration: formFieldStyle().copyWith(
+												labelText: 'Plaguicida',											
+											),
+											validator: (value) => value!.isEmpty ? 'Campo requerido' : null,
+										),
+										onTap: () {
+											SelectDialog.showModal<Plaguicida>(
+												context,
+												label: 'Plaguicida',
+												searchHint: 'Buscar plaguicida',
+												items: calculationController.plaguicidas,
+												selectedValue: calculationController.selectedPlaguicida,
+												onChange: (Plaguicida selected) {
+													calculationController.selectedPlaguicida = selected;
+
+													calculationController.plaguicidaTextController.text = selected.plaguicida!;
+												},
 											);
-										}).toList(),
-										onChanged: (value) {
-											calculationController.plaguicidaTextController.text = value.toString();
 										},
 									),
 
@@ -93,12 +135,14 @@ class FormCalculationScreen extends StatelessWidget {
 
 									const SizedBox(height: 15),
 
-									TextField(
+									TextFormField(
 										controller: calculationController.dosisTextController,
 										decoration: formFieldStyle().copyWith(
 											labelText: 'Dosis',											
 										),
+										validator: (value) => value!.isEmpty ? 'Campo requerido' : null,
 										keyboardType: const TextInputType.numberWithOptions(decimal: true),
+										inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}'))],
 									),
 
 									const SizedBox(height: 15),
@@ -108,15 +152,16 @@ class FormCalculationScreen extends StatelessWidget {
 									const SizedBox(height: 25),
 								],
 							),
-					    	),
-					  	],
+								),
+							],
+						),
 					),
 				)
 			),
 		);
 	}
 
-	Widget _header(context, textTheme){
+	Widget _header(context, textTheme, CalculationController calculationController) {
 
 		return Stack(
 			clipBehavior: Clip.none,
@@ -162,15 +207,15 @@ class FormCalculationScreen extends StatelessWidget {
 				  			CustomSlidingSegmentedControl(
 								controller: calculationController.vinoTextController,
 				  				isStretch: true,
-				  				initialValue: 1,
+				  				initialValue: 'tinto',
 				  				children: const {
-				  					1: Text('Tinto', style: TextStyle(color: Color(0xff111b31), fontWeight: FontWeight.bold, fontSize: 16) ),
-				  					2: Text('Blanco', style: TextStyle(color: Color(0xff111b31), fontWeight: FontWeight.bold, fontSize: 16)),
+				  					'tinto': Text('Tinto', style: TextStyle(color: Color(0xff111b31), fontWeight: FontWeight.bold, fontSize: 16) ),
+				  					'blanco': Text('Blanco', style: TextStyle(color: Color(0xff111b31), fontWeight: FontWeight.bold, fontSize: 16)),
 				  				},
 				  				duration: const Duration(milliseconds: 300),
 				  				curve: Curves.easeInToLinear,
 				  				onValueChanged: (v) {
-				  					
+				  					calculationController.vinoTextController.value = v;
 				  				},
 				  				innerPadding: const EdgeInsets.all(3),
 				  				decoration: BoxDecoration(
@@ -229,17 +274,16 @@ class FormCalculationScreen extends StatelessWidget {
 			),
 			child: Center(
 				child: GestureDetector(
-					onTap: () {},
-					child: const Text(
-					'Calcular',
-					textAlign: TextAlign.left,
-					style: TextStyle(
-						fontFamily: "Netflix",
-						fontWeight: FontWeight.w600,
-						fontSize: 18,
-						letterSpacing: 0.0,
-						color: Colors.white,
-					),
+					onTap: () {
+						calculationController.postCalculate();
+					},
+					child: const Text('Calcular', textAlign: TextAlign.left, style: TextStyle(
+							fontFamily: "Netflix",
+							fontWeight: FontWeight.w600,
+							fontSize: 18,
+							letterSpacing: 0.0,
+							color: Colors.white,
+						),
 					),
 				),
 			),

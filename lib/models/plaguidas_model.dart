@@ -58,4 +58,13 @@ class Plaguicida {
 		"ftt": ftt,
 		"ftb": ftb,
 	};
+
+	@override
+	String toString() => plaguicida!;
+
+	@override
+	operator == (other) => other is Plaguicida && other.id == id;
+
+	@override
+	int get hashCode => id.hashCode^plaguicida.hashCode^id.hashCode;
 }

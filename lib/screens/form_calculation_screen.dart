@@ -7,6 +7,7 @@ import 'package:repla_vinos/constants.dart';
 import 'package:repla_vinos/controllers/calculation_controller.dart';
 import 'package:select_dialog/select_dialog.dart';
 
+
 import '../models/plaguidas_model.dart';
 
 class FormCalculationScreen extends StatelessWidget {
@@ -28,7 +29,6 @@ class FormCalculationScreen extends StatelessWidget {
 				body: SingleChildScrollView(
 					child: Form(
 						key: _formKey,
-						autovalidateMode: AutovalidateMode.onUserInteraction,
 						child: Column(
 							children: [
 								_header(context, textTheme, calculationController),							
@@ -249,35 +249,37 @@ class FormCalculationScreen extends StatelessWidget {
 
 	// form Button
 	Widget _formButton(context) {
-		return Container(
-			height: 60,
-			decoration: const BoxDecoration(
-				gradient: LinearGradient(
-					colors: [
-					Color.fromRGBO(1, 183, 97, 1),
-					Color.fromRGBO(1, 183, 97, 1),
-					],
-					begin: Alignment.centerLeft,
-					end: Alignment.centerRight,
+		return InkWell(
+			onTap: () {
+				if (_formKey.currentState!.validate()) {
+					calculationController.postCalculate();
+				}
+			},			
+			child: Container(
+				height: 60,
+				decoration: const BoxDecoration(
+					gradient: LinearGradient(
+						colors: [
+						Color.fromRGBO(1, 183, 97, 1),
+						Color.fromRGBO(1, 183, 97, 1),
+						],
+						begin: Alignment.centerLeft,
+						end: Alignment.centerRight,
+					),
+					borderRadius: BorderRadius.all(
+						Radius.circular(25.0),
+					),
+					boxShadow: [
+						BoxShadow(
+						color: Color.fromRGBO(1, 183, 97, 0.5),
+						spreadRadius: 1,
+						blurRadius: 15,
+						offset: Offset(0, 5),
+						)
+					]
 				),
-				borderRadius: BorderRadius.all(
-					Radius.circular(25.0),
-				),
-				boxShadow: [
-					BoxShadow(
-					color: Color.fromRGBO(1, 183, 97, 0.5),
-					spreadRadius: 1,
-					blurRadius: 15,
-					offset: Offset(0, 5),
-					)
-				]
-			),
-			child: Center(
-				child: GestureDetector(
-					onTap: () {
-						calculationController.postCalculate();
-					},
-					child: const Text('Calcular', textAlign: TextAlign.left, style: TextStyle(
+				child: const Center(
+					child: Text('Calcular', textAlign: TextAlign.left, style: TextStyle(
 							fontFamily: "Netflix",
 							fontWeight: FontWeight.w600,
 							fontSize: 18,

@@ -3,20 +3,23 @@ import 'dart:io';
 
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:repla_vinos/models/calculo_response_model.dart';
 import 'package:repla_vinos/models/plaguidas_model.dart';
-import 'package:repla_vinos/models/user_model.dart';
 
 class ApiProvider {
 	final _baseUrl = "https://api.replavinos.cl/";
 
-	Future<UserModel?> calculo(Map<String, dynamic> body) async {
+	Future<CalculoResponseModel?> calculo(Map<String, dynamic> body) async {
 		final response = await http.post(
 			Uri.parse('${_baseUrl}calculo'),
 			body: body,
+			headers: {
+				HttpHeaders.authorizationHeader: GetStorage().read('user')['llave_api']
+			}
     	);
 
 		if (response.statusCode == 201) {
-			return UserModel.fromJson( jsonDecode(response.body) );
+			return CalculoResponseModel.fromJson( jsonDecode(response.body) );
 		}else{
 			return null;
 		}

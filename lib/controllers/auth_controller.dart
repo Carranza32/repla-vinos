@@ -56,7 +56,10 @@ class AuthController extends GetxController{
 		Get.back();
 
 		if (response != null) {
-			storage.write('user', response.usuario![0]);
+			if (response.usuario!.isNotEmpty) {
+			   storage.write('user', response.usuario![0]); 
+			}
+			
 			Get.offAllNamed("form_calculation");
 		}else{
 			Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
@@ -83,7 +86,10 @@ class AuthController extends GetxController{
 		Get.back();
 
 		if (response != null) {
-			storage.write('user', response.usuario![0]);
+			if (response.usuario!.isNotEmpty) {
+			   storage.write('user', response.usuario![0]); 
+			}
+
 			Get.offAllNamed("form_calculation");
 		}else{
 			Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);

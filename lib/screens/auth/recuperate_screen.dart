@@ -5,11 +5,11 @@ import 'package:lottie/lottie.dart';
 import '../../constants.dart';
 import 'package:repla_vinos/utils/validations.dart';
 
-class LoginScreen extends StatelessWidget {
+class RecuperateScreen extends StatelessWidget {
 	final AuthController authController = Get.put(AuthController());
   	final _formKey = GlobalKey<FormState>();
 
-  	LoginScreen({super.key});
+  	RecuperateScreen({super.key});
 
 	@override
 	Widget build(BuildContext context) {
@@ -88,20 +88,13 @@ class LoginScreen extends StatelessWidget {
 				Padding(
 					padding: const EdgeInsets.only(left: 20.0),
 					child: Text(
-						'login'.tr,
+						'recuperate'.tr,
 						style: kLoginTitleStyle(size),
 					),
 				),
 				const SizedBox(
 					height: 10,
 				),
-				// Padding(
-				// 	padding: const EdgeInsets.only(left: 20.0),
-				// 	child: Text(
-				// 		'Welcome Back Catchy',
-				// 		style: kLoginSubtitleStyle(size),
-				// 	),
-				// ),
 				SizedBox(
 					height: size.height * 0.03,
 				),
@@ -127,68 +120,16 @@ class LoginScreen extends StatelessWidget {
 									height: size.height * 0.02,
 								),
 
-								/// password
-								TextFormField(
-									style: kTextFormFieldStyle(),
-									controller: authController.passwordTextController,
-									decoration: authFormFieldStyle().copyWith(
-										prefixIcon: const Icon(Icons.lock_open, color: Color(0xff4bbf78)),
-										labelText: "password".tr,
-										hintText: "password_hint".tr,
-									),
-									// The validator receives the text that the user has entered.
-									// validator: (value) => (value!.isMinString) ? null : 'Debe ser un número de 8 dígitos.'
-								),
-
-								SizedBox(
-									height: size.height * 0.03,
-								),
-
-								// Navigate To Register Screen
-								GestureDetector(
-									onTap: () {
-										Get.toNamed("recuperate");
-										
-										_formKey.currentState?.reset();
-									},
-									child: RichText(
-										text: TextSpan(
-											text: 'forgot_password'.tr,
-											style: kHaveAnAccountStyle(size),
-											children: [
-												TextSpan(
-													text: " ${"recuperate_password".tr}",
-													style: kLoginOrSignUpTextStyle(
-														size,
-													),
-												),
-											],
-										),
-									),
-								),
-
-								SizedBox(
-									height: size.height * 0.02,
-								),
-								Text(
-									'login_footer'.tr,
-									style: kLoginTermsAndPrivacyStyle(size),
-									textAlign: TextAlign.center,
-								),
-								SizedBox(
-									height: size.height * 0.02,
-								),
-
 								/// Login Button
 								loginButton(),
 								SizedBox(
 									height: size.height * 0.03,
 								),
 
-								// Navigate To Register Screen
+								/// Navigate To Login Screen
 								GestureDetector(
 									onTap: () {
-										Get.toNamed("signup");
+										Get.toNamed('login');
 
 										authController.emailTextController.clear();
 										authController.passwordTextController.clear();
@@ -197,11 +138,11 @@ class LoginScreen extends StatelessWidget {
 									},
 									child: RichText(
 										text: TextSpan(
-											text: 'account_exists'.tr,
+											text: 'account_already_exists'.tr,
 											style: kHaveAnAccountStyle(size),
 											children: [
 												TextSpan(
-													text: " ${"register".tr}",
+													text: " ${"return".tr}",
 													style: kLoginOrSignUpTextStyle(
 														size,
 													),
@@ -209,7 +150,7 @@ class LoginScreen extends StatelessWidget {
 											],
 										),
 									),
-								),								
+								),
 							],
 						),
 					),
@@ -235,7 +176,7 @@ class LoginScreen extends StatelessWidget {
 						authController.login();
 					}
 				},
-				child: Text('login_button'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
+				child: Text('recuperate_password'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
 			),
 		);
 	}

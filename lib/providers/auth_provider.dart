@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:http/http.dart' as http;
 import 'package:repla_vinos/models/user_model.dart';
 
@@ -13,7 +14,7 @@ class AuthProvider {
 			body: body,
     	);
 
-		if (response.statusCode == 201) {
+		if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
 			return UserModel.fromJson( jsonDecode(response.body) );
 		}else{
 			return null;
@@ -26,7 +27,7 @@ class AuthProvider {
 			body: body,
     	);
 
-		if (response.statusCode == 201) {
+		if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
 			return UserModel.fromJson( jsonDecode(response.body) );
 		}else{
 			return null;
@@ -39,7 +40,7 @@ class AuthProvider {
 			body: body,
     	);
 
-		if (response.statusCode == 201) {
+		if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
 			return UserModel.fromJson( jsonDecode(response.body) );
 		}else{
 			return null;

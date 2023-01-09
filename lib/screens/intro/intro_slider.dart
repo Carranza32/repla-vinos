@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
-import 'package:repla_vinos/screens/auth/login_view.dart';
 import 'package:repla_vinos/screens/intro/intro_screen.dart';
 
 

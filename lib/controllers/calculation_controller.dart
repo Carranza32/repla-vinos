@@ -2,8 +2,11 @@ import 'package:custom_sliding_segmented_control/custom_sliding_segmented_contro
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:repla_vinos/models/plaguidas_model.dart';
 import 'package:repla_vinos/providers/api_provider.dart';
+
+import '../models/user_model.dart';
 
 class CalculationController extends GetxController {
 	final provider = ApiProvider();
@@ -12,8 +15,14 @@ class CalculationController extends GetxController {
 	final plaguicidaTextController = TextEditingController();
 	final dosisTextController = TextEditingController();
 	final vinoTextController = CustomSegmentedController();
-	List<Plaguicida> plaguicidas = <Plaguicida>[];
+	List<Plaguicida> plaguicidas = [];
 	Plaguicida selectedPlaguicida = Plaguicida();
+
+	@override
+  void onInit() {
+    getPlaguicidas();
+    super.onInit();
+  }
 
 	@override
 	void onReady() {
@@ -47,12 +56,12 @@ class CalculationController extends GetxController {
 			Get.back();
 
 			if (response != null) {
-				print(response);
+				Get.toNamed('results', arguments: [{
+					'resultado': response.resultado,
+				}]);
 			}else{
 				Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
 			}
-
-			print(body);
 		} catch (e) {
 			Get.back();
 			Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
@@ -61,28 +70,32 @@ class CalculationController extends GetxController {
 	}
 
 	void getPlaguicidas() async {
-		//Loading
-		Get.dialog(
-			const Center(
-				child: CircularProgressIndicator(),
-			),
-			barrierDismissible: false
-		);
+		try {
+		  	//Loading
+			Get.dialog(
+				const Center(
+					child: CircularProgressIndicator(),
+				),
+				barrierDismissible: false
+			);			
 
-		final response = await provider.plaguicidas();
+			final response = await provider.plaguicidas();
 
-		Get.back();
+			Get.back();
 
-		if (response != null) {
-			plaguicidas.clear();
+			if (response != null) {
+				plaguicidas.clear();
 
-			for (var element in response) {
-				plaguicidas.add(element!);
+				for (var element in response) {
+					plaguicidas.add(element!);
+				}
+
+				selectedPlaguicida = plaguicidas.first;
+
+				plaguicidaTextController.text = plaguicidas.first.plaguicida!;
 			}
-
-			selectedPlaguicida = plaguicidas.first;
-
-			plaguicidaTextController.text = plaguicidas.first.plaguicida!;
+		} catch (e) {
+			Get.back();
 		}
 	}
 

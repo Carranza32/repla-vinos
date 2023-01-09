@@ -19,5 +19,17 @@ class Routes {
 			name: '/form_calculation',
 			page: () => FormCalculationScreen(),
 		),
+		GetPage(
+			name: '/results',
+			page: () => ResultScreen(),
+		),
+		GetPage(
+			name: '/recuperate',
+			page: () => RecuperateScreen(),
+		),
+		GetPage(
+			name: '/profile',
+			page: () => ProfileScreen(),
+		),
 	];
 }

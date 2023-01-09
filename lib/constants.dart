@@ -27,6 +27,21 @@ GoogleFonts.ubuntu(
 
 TextStyle kTextFormFieldStyle() => const TextStyle(color: Colors.black);
 
+InputDecoration authFormFieldStyle() => const InputDecoration(
+	iconColor: Color(0xff4bbf78),
+	prefixIconColor: Color(0xff4bbf78),
+	suffixIconColor: Color(0xff4bbf78),
+	floatingLabelStyle: TextStyle(color: Color(0xff4bbf78)),
+	// prefixIcon: Icon(Icons.calendar_today, color: Color(0xff111b31)),
+	focusedBorder: OutlineInputBorder(
+		borderSide: BorderSide(color: Color(0xff4bbf78), width: 2.0),
+		borderRadius: BorderRadius.all(Radius.circular(15)),
+	),
+	border: OutlineInputBorder(
+		borderRadius: BorderRadius.all(Radius.circular(15)),
+	),
+);
+
 InputDecoration formFieldStyle() => const InputDecoration(
 	// prefixIcon: Icon(Icons.calendar_today, color: Color(0xff111b31)),
 	iconColor: Color(0xff111b31),

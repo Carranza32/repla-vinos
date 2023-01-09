@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:repla_vinos/utils/messages_translations.dart';
 import 'package:repla_vinos/utils/router.dart';
 
 void main() async {
@@ -15,9 +16,12 @@ class MyApp extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return GetMaterialApp(
 			debugShowCheckedModeBanner: false,
-			title: 'Repla Vinos',
+			title: 'app_title'.tr,
 			getPages: Routes.route,
 			initialRoute: 'splash',
+			locale: const Locale('es', 'ES'),
+			translations: LanguageTranslations(),
+			fallbackLocale: const Locale('es'),
 			theme: ThemeData(
 				useMaterial3: true,
 				// primaryColor: const Color(0xff3c37ff),

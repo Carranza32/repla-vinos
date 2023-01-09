@@ -68,157 +68,143 @@ class SignUpScreen extends StatelessWidget {
 
 	/// Main Body
 	Widget _buildMainBody(Size size, ThemeData theme) {
-		return Column(
-			crossAxisAlignment: CrossAxisAlignment.start,
-			mainAxisAlignment:
-				size.width > 600 ? MainAxisAlignment.center : MainAxisAlignment.start,
-			children: [
-				size.width > 600
-					? Container()
-					: Lottie.asset(
-						'assets/wave.json',
-						height: size.height * 0.2,
-						width: size.width,
-						fit: BoxFit.fill,
-					),
-				SizedBox(
-					height: size.height * 0.03,
-				),
-				Padding(
-					padding: const EdgeInsets.only(left: 20.0),
-					child: Text(
-						'Sign Up',
-						style: kLoginTitleStyle(size),
-					),
-				),
-				const SizedBox(
-					height: 10,
-				),
-				Padding(
-					padding: const EdgeInsets.only(left: 20.0),
-					child: Text(
-						'Create Account',
-						style: kLoginSubtitleStyle(size),
-					),
-				),
-				SizedBox(
-					height: size.height * 0.03,
-				),
-				Padding(
-					padding: const EdgeInsets.only(left: 20.0, right: 20),
-					child: Form(
-						key: _formKey,
-						child: Column(
-						children: [
-							/// username
-							TextFormField(
-								style: kTextFormFieldStyle(),
-								decoration: const InputDecoration(
-									prefixIcon: Icon(Icons.person),
-									hintText: 'Nombre',
-									labelText: 'Nombre',
-									focusedBorder: OutlineInputBorder(
-										borderSide: BorderSide(color: Color(0xff4bbf78), width: 2.0),
-										borderRadius: BorderRadius.all(Radius.circular(15)),
-									),
-									border: OutlineInputBorder(
-										borderRadius: BorderRadius.all(Radius.circular(15)),
-									),
-								),
+		return SingleChildScrollView(
+			primary: true,
+		  child: Column(
+		  	crossAxisAlignment: CrossAxisAlignment.start,
+		  	mainAxisAlignment:
+		  		size.width > 600 ? MainAxisAlignment.center : MainAxisAlignment.start,
+		  	children: [
+		  		size.width > 600
+		  			? Container()
+		  			: Lottie.asset(
+		  				'assets/wave.json',
+		  				height: size.height * 0.2,
+		  				width: size.width,
+		  				fit: BoxFit.fill,
+		  			),
+		  		SizedBox(
+		  			height: size.height * 0.03,
+		  		),
+		  		Padding(
+		  			padding: const EdgeInsets.only(left: 20.0),
+		  			child: Text(
+		  				'sign_up'.tr,
+		  				style: kLoginTitleStyle(size),
+		  			),
+		  		),
+		  		const SizedBox(
+		  			height: 10,
+		  		),
+		  		Padding(
+		  			padding: const EdgeInsets.only(left: 20.0),
+		  			child: Text(
+		  				'create_account'.tr,
+		  				style: kLoginSubtitleStyle(size),
+		  			),
+		  		),
+		  		SizedBox(
+		  			height: size.height * 0.03,
+		  		),
+		  		Padding(
+		  			padding: const EdgeInsets.only(left: 20.0, right: 20),
+		  			child: Form(
+		  				key: _formKey,
+		  				child: Column(
+		  				children: [
+		  					/// username
+		  					TextFormField(
+		  						style: kTextFormFieldStyle(),
+		  						decoration: authFormFieldStyle().copyWith(
+		  							prefixIcon: const Icon(Icons.person, color: Color(0xff4bbf78)),
+		  							labelText: 'name'.tr,
+		  							hintText: 'name_hint'.tr,									
+		  						),
 
-								controller: authController.nameTextController,
-								// The validator receives the text that the user has entered.
-								validator: (value) => (value!.isMinString) ? null : 'Debe ser un número de 8 dígitos.'
-							),
-							SizedBox(
-								height: size.height * 0.02,
-							),
+		  						controller: authController.nameTextController,
+		  						// The validator receives the text that the user has entered.
+		  						validator: (value) => (value!.isEmpty) ? 'field_required'.tr : null
+		  					),
+		  					SizedBox(
+		  						height: size.height * 0.02,
+		  					),
 
-							/// Gmail
-							TextFormField(
-								style: kTextFormFieldStyle(),
-								controller: authController.emailTextController,
-								decoration: const InputDecoration(
-									prefixIcon: Icon(Icons.email_rounded),
-									hintText: 'Ingrese su email',
-									labelText: 'Email',
-									focusedBorder: OutlineInputBorder(
-										borderSide: BorderSide(color: Color(0xff4bbf78), width: 2.0),
-										borderRadius: BorderRadius.all(Radius.circular(15)),
-									),
-									border: OutlineInputBorder(
-										borderRadius: BorderRadius.all(Radius.circular(15)),
-									),
-								),
-								// The validator receives the text that the user has entered.
-								validator: (value) => (value!.isMyEmail) ? null : 'Email no valido',
-							),
-							SizedBox(
-								height: size.height * 0.02,
-							),
+		  					/// Gmail
+		  					TextFormField(
+		  						style: kTextFormFieldStyle(),
+		  						controller: authController.emailTextController,
+		  						decoration: authFormFieldStyle().copyWith(
+		  							prefixIcon: const Icon(Icons.email_rounded, color: Color(0xff4bbf78)),
+		  							hintText: 'Ingrese su email',
+		  							labelText: 'Email',
+		  						),
+		  						// The validator receives the text that the user has entered.
+		  						validator: (value) => (value!.isMyEmail) ? null : 'email_wrong'.tr,
+		  					),
+		  					SizedBox(
+		  						height: size.height * 0.02,
+		  					),
 
-							/// password
-							TextFormField(
-								style: kTextFormFieldStyle(),
-								controller: authController.passwordTextController,
-								decoration: const InputDecoration(
-									prefixIcon: Icon(Icons.lock_open),
-									hintText: "Ingrese su clave",
-									labelText: "Clave",
-									border: OutlineInputBorder(
-										borderRadius: BorderRadius.all(Radius.circular(15)),
-									),
-								),
-								// The validator receives the text that the user has entered.
-								validator: (value) => (value!.isMinString) ? null : 'Debe ser un número de 8 dígitos.'
-							),
+		  					/// password
+		  					TextFormField(
+		  						style: kTextFormFieldStyle(),
+		  						controller: authController.passwordTextController,
+		  						decoration: authFormFieldStyle().copyWith(
+		  							prefixIcon: const Icon(Icons.lock_open, color: Color(0xff4bbf78)),
+		  							labelText: "password".tr,
+		  							hintText: "password_hint".tr,
+		  						),
+		  						// The validator receives the text that the user has entered.
+		  						validator: (value) => (value!.isMinString) ? null : 'digits'.tr
+		  					),
 
-							SizedBox(
-								height: size.height * 0.01,
-							),
-							Text(
-								'Creating an account means you\'re okay with our Terms of Services and our Privacy Policy',
-								style: kLoginTermsAndPrivacyStyle(size),
-								textAlign: TextAlign.center,
-							),
-							SizedBox(
-								height: size.height * 0.02,
-							),
+		  					SizedBox(
+		  						height: size.height * 0.01,
+		  					),
+		  					Text(
+		  						'login_footer'.tr,
+		  						style: kLoginTermsAndPrivacyStyle(size),
+		  						textAlign: TextAlign.center,
+		  					),
+		  					SizedBox(
+		  						height: size.height * 0.02,
+		  					),
 
-							/// SignUp Button
-							signUpButton(theme),
-							SizedBox(
-								height: size.height * 0.03,
-							),
+		  					/// SignUp Button
+		  					signUpButton(theme),
+		  					SizedBox(
+		  						height: size.height * 0.03,
+		  					),
 
-								/// Navigate To Login Screen
-								GestureDetector(
-									onTap: () {
-										Get.toNamed("login");
+		  						/// Navigate To Login Screen
+		  						GestureDetector(
+		  							onTap: () {
+		  								Get.toNamed("login");
 
-										authController.emailTextController.clear();
-										authController.nameTextController.clear();
-										authController.passwordTextController.clear();
+		  								authController.emailTextController.clear();
+		  								authController.nameTextController.clear();
+		  								authController.passwordTextController.clear();
 
-										_formKey.currentState?.reset();
-									},
-									child: RichText(
-										text: TextSpan(
-											text: '¿Ya tienes una cuenta?',
-											style: kHaveAnAccountStyle(size),
-											children: [
-												TextSpan(
-													text: " Login",
-													style: kLoginOrSignUpTextStyle(size)),
-											],
-										),
-									),
-								),
-							],
-						),
-					),
-				),
-			],
+		  								_formKey.currentState?.reset();
+		  							},
+		  							child: RichText(
+		  								text: TextSpan(
+		  									text: 'account_exists'.tr,
+		  									style: kHaveAnAccountStyle(size),
+		  									children: [
+		  										TextSpan(
+		  											text: "login".tr,
+		  											style: kLoginOrSignUpTextStyle(size)),
+		  									],
+		  								),
+		  							),
+		  						),
+		  					],
+		  				),
+		  			),
+		  		),
+		  	],
+		  ),
 		);
 	}
 
@@ -239,9 +225,8 @@ class SignUpScreen extends StatelessWidget {
 					if (_formKey.currentState!.validate()) {
 						authController.register();
 					}
-					Get.offAllNamed("form_calculation");
 				},
-				child: const Text('Registrarse', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
+				child: Text('sign_up'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
 			),
 		);
 	}

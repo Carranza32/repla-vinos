@@ -65,6 +65,7 @@ class LanguageTranslations extends Translations {
 			'return': 'Regresar',
 			'profile': 'Perfil',
 			'update_profile': 'Actualizar datos',
+			'send_email': 'Enviar datos por email',
 
 			'form_title': 'Registro de aplicación',
 			'vini': 'Vinificación',

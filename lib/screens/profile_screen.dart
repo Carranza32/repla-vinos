@@ -133,7 +133,7 @@ class ProfileScreen extends StatelessWidget {
 														),
 														onPressed: () {
 															if (_formKey.currentState!.validate()) {
-																//profileController.login();
+																profileController.updateProfile();
 															}
 														},
 														child: Text('update_profile'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),

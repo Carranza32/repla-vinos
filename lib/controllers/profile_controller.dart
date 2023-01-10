@@ -26,4 +26,8 @@ class ProfileController extends GetxController {
 
 		super.onInit();
 	}
+
+	void updateProfile(){
+		
+	}
 }

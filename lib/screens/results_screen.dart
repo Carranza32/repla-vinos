@@ -17,10 +17,15 @@ class ResultScreen extends StatelessWidget {
 	// 	f3: '0.01 (mg/kg) 01-01-1970',
 	// 	f4: '0.04 (mg/kg) 01-01-1970',
 	// 	pie: 'Las fechas de cosecha son referenciales y han sido obtenidas a partir de curvas de disperción en campo y estudios de traspaso de residuos de poluguicidas en el proceso de vinificación.',
-	// );
+	// );	
 
 	@override
 	Widget build(BuildContext context) {
+		// ignore: unnecessary_null_comparison
+		if(resultado == null){
+			Get.toNamed("form_calculation");
+		}
+
 		return Scaffold(
 			appBar: AppBar(
 				backgroundColor: const Color(0xff11ab6a),
@@ -61,6 +66,23 @@ class ResultScreen extends StatelessWidget {
 
 						const SizedBox(height: 25),
 						Text(resultado.pie ?? '', style: Theme.of(context).textTheme.bodyMedium),
+
+						const SizedBox(height: 25),
+						SizedBox(
+							width: double.infinity,
+							height: 55,
+							child: ElevatedButton(
+								style: ElevatedButton.styleFrom(
+									backgroundColor: const Color(0xffa3fb82),
+									shape: RoundedRectangleBorder(
+										borderRadius: BorderRadius.circular(15),
+									),
+								),
+								onPressed: () {
+								},
+								child: Text('send_email'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
+							),
+						),
 					],
 				),
 			),

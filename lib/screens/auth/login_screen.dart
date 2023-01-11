@@ -40,12 +40,12 @@ class LoginScreen extends StatelessWidget {
 					Expanded(
 						flex: 4,
 						child: RotatedBox(
-							quarterTurns: 3,
-							child: Lottie.asset(
-								'assets/coin.json',
-								height: size.height * 0.3,
+							quarterTurns: 0,
+							child: Image.asset(
+								'assets/132033-green-login.gif',
+								height: size.height * 0.5,
 								width: double.infinity,
-								fit: BoxFit.fill,
+								fit: BoxFit.contain,
 							),
 						),
 					),
@@ -81,6 +81,12 @@ class LoginScreen extends StatelessWidget {
 							width: size.width,
 							fit: BoxFit.fill,
 						),
+
+				Image.asset(
+					'assets/logoid2.png',
+					height: 140,
+					width: 400,
+				),
 
 				SizedBox(
 					height: size.height * 0.03,

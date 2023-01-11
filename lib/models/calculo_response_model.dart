@@ -45,8 +45,8 @@ class Resultado {
 	});
 
 	String? titulo;
-	String? txtBq1;
-	String? txtBq2;
+	List<String?>? txtBq1;
+	List<String?>? txtBq2;
 	String? f1;
 	String? f2;
 	String? f3;
@@ -55,8 +55,8 @@ class Resultado {
 
 	factory Resultado.fromJson(Map<String, dynamic> json) => Resultado(
 		titulo: json["titulo"],
-		txtBq1: json["txt_bq1"],
-		txtBq2: json["txt_bq2"],
+		txtBq1: json["txt_bq1"] == null ? [] : List<String?>.from(json["txt_bq1"]!.map((x) => x)),
+		txtBq2: json["txt_bq2"] == null ? [] : List<String?>.from(json["txt_bq2"]!.map((x) => x)),
 		f1: json["f1"],
 		f2: json["f2"],
 		f3: json["f3"],
@@ -66,8 +66,8 @@ class Resultado {
 
 	Map<String, dynamic> toJson() => {
 		"titulo": titulo,
-		"txt_bq1": txtBq1,
-		"txt_bq2": txtBq2,
+		"txt_bq1": txtBq1 == null ? [] : List<dynamic>.from(txtBq1!.map((x) => x)),
+		"txt_bq2": txtBq2 == null ? [] : List<dynamic>.from(txtBq2!.map((x) => x)),
 		"f1": f1,
 		"f2": f2,
 		"f3": f3,

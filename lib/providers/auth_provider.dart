@@ -40,16 +40,16 @@ class AuthProvider {
 		}
 	}
 
-	Future<UserModel?> restartPassword(Map<String, dynamic> body) async {
+	Future<bool?> restartPassword(Map<String, dynamic> body) async {
 		final response = await http.post(
 			Uri.parse('${_baseUrl}recuperacion'),
 			body: body,
     	);
 
 		if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
-			return UserModel.fromJson( jsonDecode(response.body) );
+			return true;
 		}else{
-			return null;
+			return false;
 		}
 	}
 }

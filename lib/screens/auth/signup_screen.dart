@@ -41,12 +41,12 @@ class SignUpScreen extends StatelessWidget {
 				Expanded(
 					flex: 4,
 					child: RotatedBox(
-						quarterTurns: 3,
-						child: Lottie.asset(
-							'assets/coin.json',
-							height: size.height * 0.3,
+						quarterTurns: 0,
+						child: Image.asset(
+							'assets/132033-green-login.gif',
+							height: size.height * 0.5,
 							width: double.infinity,
-							fit: BoxFit.fill,
+							fit: BoxFit.contain,
 						),
 					),
 				),

@@ -42,7 +42,7 @@ class LanguageTranslations extends Translations {
 		'es': {
 			'app_title': 'Repla vinos',
 
-			'login': 'Iniciar',
+			'login': 'Iniciar sesión',
 			'sign_up': 'Registrarme',
 			'recuperate': 'Recuperación',
 

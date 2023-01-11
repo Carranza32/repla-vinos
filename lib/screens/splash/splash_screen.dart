@@ -10,10 +10,11 @@ class SplashScreen extends StatelessWidget {
 		// ignore: unused_local_variable
 		SplashController controller = Get.put(SplashController());
 
-		return const Scaffold(
+		return Scaffold(
 			body: Center(
-				child: FlutterLogo(
-					size: 75,
+				child: Image.asset(
+					'assets/sidal.png',
+					height: 75,
 				),
 			),
 		);

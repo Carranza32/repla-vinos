@@ -40,12 +40,12 @@ class RecuperateScreen extends StatelessWidget {
 					Expanded(
 						flex: 4,
 						child: RotatedBox(
-							quarterTurns: 3,
-							child: Lottie.asset(
-								'assets/coin.json',
-								height: size.height * 0.3,
+							quarterTurns: 0,
+							child: Image.asset(
+								'assets/132033-green-login.gif',
+								height: size.height * 0.5,
 								width: double.infinity,
-								fit: BoxFit.fill,
+								fit: BoxFit.contain,
 							),
 						),
 					),
@@ -173,7 +173,7 @@ class RecuperateScreen extends StatelessWidget {
 				),
 				onPressed: () {
 					if (_formKey.currentState!.validate()) {
-						authController.login();
+						authController.resetPassword();
 					}
 				},
 				child: Text('recuperate_password'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),

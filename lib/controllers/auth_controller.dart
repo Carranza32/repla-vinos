@@ -97,13 +97,18 @@ class AuthController extends GetxController{
 	}
 
 	void resetPassword() async{
-		// final response = await _authProvider.doPost("password/email", {
-		// 	'email': emailTextController.text
-		// });
+		var body = <String, dynamic>{};
+		
+		body['usuario[email]'] = emailTextController.text;
 
-		// if (response.isOk) {
-		// 	Get.rawSnackbar(message: "good_job".tr);
-		// }
+		final response = await _authProvider.restartPassword(body);
+
+		if (response != true) {
+			Get.rawSnackbar(message: "wrong_try_again".tr);
+			// Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);		
+		}else{
+			
+		}
 	}
 
 	@override

@@ -35,7 +35,7 @@ class FormCalculationScreen extends StatelessWidget {
 							children: [
 								_header(context, textTheme, calculationController),							
 								SizedBox(
-								width: MediaQuery.of(context).size.width * 0.93,
+								width: MediaQuery.of(context).size.width * 0.85,
 								child: ListView(
 								primary: false,
 								shrinkWrap: true,

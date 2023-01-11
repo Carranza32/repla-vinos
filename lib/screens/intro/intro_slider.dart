@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:repla_vinos/controllers/slider_controller.dart';
+import 'package:repla_vinos/models/user_model.dart';
 import 'package:repla_vinos/screens/intro/intro_screen.dart';
 
 
@@ -21,7 +23,13 @@ class IntroSlider extends StatelessWidget {
 			home: IntroViewsFlutter(
 					pages,
 					onTapDoneButton: () {
-						Get.offAllNamed("login");
+						try {
+							Usuario user = GetStorage().read('user');
+
+							Get.toNamed("form_calculation");
+						} catch (e) {
+						  	Get.offAllNamed("login");
+						}
 					},
 					pageButtonTextStyles: const TextStyle(
 						color: Colors.white,

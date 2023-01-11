@@ -20,8 +20,8 @@ class CalculationController extends GetxController {
 
 	@override
   void onInit() {
-    getPlaguicidas();
-    super.onInit();
+		getPlaguicidas();
+		super.onInit();
   }
 
 	@override
@@ -96,6 +96,7 @@ class CalculationController extends GetxController {
 			}
 		} catch (e) {
 			Get.back();
+			print(e.toString());
 		}
 	}
 

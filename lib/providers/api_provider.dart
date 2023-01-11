@@ -30,20 +30,24 @@ class ApiProvider {
 	}
 
 	Future<List<Plaguicida?>?> plaguicidas() async {
-		Usuario user = GetStorage().read('user');
+		try {
+			Usuario user = GetStorage().read('user');
 
-		final response = await http.post(
-			Uri.parse('${_baseUrl}plaguicidas'),
-			headers: {
-				HttpHeaders.authorizationHeader: user.llaveApi ?? ''
+			final response = await http.post(
+				Uri.parse('${_baseUrl}plaguicidas'),
+				headers: {
+					HttpHeaders.authorizationHeader: user.llaveApi ?? ''
+				}
+			);
+
+			if (response.statusCode != HttpStatus.created) {
+				return null;
 			}
-    	);
 
-		if (response.statusCode != HttpStatus.created) {
-			return null;
+			return PlaguicidasModel.fromJson( jsonDecode(response.body) ).plaguicidas;
+		} catch (e) {
+		  return null;
 		}
-
-		return PlaguicidasModel.fromJson( jsonDecode(response.body) ).plaguicidas;
 	}
 
 	Future<List<SliderObj?>?> getSliders() async {

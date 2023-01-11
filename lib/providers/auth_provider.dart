@@ -28,7 +28,13 @@ class AuthProvider {
     	);
 
 		if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
-			return UserModel.fromJson( jsonDecode(response.body) );
+			var created = UserModel.fromJson( jsonDecode(response.body) );
+
+			if (created.usuario == null) {
+				return null;
+			}
+
+			return created;
 		}else{
 			return null;
 		}

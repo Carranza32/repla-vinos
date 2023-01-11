@@ -18,7 +18,6 @@ class AuthController extends GetxController{
 		emailTextController.text = "juan2@gmail.com";
 		passwordTextController.text = "111111";
 		// checkAuth();
-		storage.erase();
 		super.onReady();
 	}
 
@@ -88,9 +87,10 @@ class AuthController extends GetxController{
 		if (response != null) {
 			if (response.usuario!.isNotEmpty) {
 			   storage.write('user', response.usuario![0]); 
-			}
-
-			Get.offAllNamed("form_calculation");
+				Get.offAllNamed("form_calculation");
+			}else{
+				Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
+			}			
 		}else{
 			Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
 		}

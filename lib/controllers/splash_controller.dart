@@ -6,6 +6,14 @@ class SplashController extends GetxController {
 	void onReady() {
 		try {
 			var token = GetStorage().read('user');
+			var slider = GetStorage().read('slider_showed');
+
+			if (slider == false || slider == null) {
+				GetStorage().write('slider_showed', true);
+
+			  	Get.offAllNamed('intro');
+				return;
+			}
 
 			if (token != null) {
 				Get.offAllNamed("form_calculation");

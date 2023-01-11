@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:repla_vinos/screens/text/intro_text.dart';
 
-
 final pages = [
 	PageViewModel(
 		pageColor: const Color(0xFF03A9F4),
@@ -17,7 +16,7 @@ final pages = [
 			alignment: Alignment.center,
 		)
 	),
-		PageViewModel(
+	PageViewModel(
 		pageColor: const Color(0xFF8BC34A),
 		iconImageAssetPath: 'assets/logo_corfo.png',
 		title: const Text(intro_tittle_p2),

@@ -31,5 +31,9 @@ class Routes {
 			name: '/profile',
 			page: () => ProfileScreen(),
 		),
+		GetPage(
+			name: '/intro',
+			page: () => IntroSlider(),
+		),
 	];
 }

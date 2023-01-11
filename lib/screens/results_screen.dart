@@ -2,10 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:repla_vinos/constants.dart';
+import 'package:repla_vinos/controllers/result_controller.dart';
 import 'package:repla_vinos/models/calculo_response_model.dart';
 
 class ResultScreen extends StatelessWidget {
 	ResultScreen({super.key});
+	final ResultController resultController = Get.put(ResultController());
+
 	Resultado resultado = Get.arguments[0]['resultado'];
 
 	// Resultado resultado = Resultado(
@@ -79,6 +83,43 @@ class ResultScreen extends StatelessWidget {
 									),
 								),
 								onPressed: () {
+									Get.defaultDialog(
+										title: 'Enviar resultados',
+										content: Column(
+											children: [
+												TextField(
+													keyboardType: TextInputType.emailAddress,
+													style: kTextFormFieldStyle(),
+													decoration: authFormFieldStyle().copyWith(
+														prefixIcon: const Icon(Icons.person, color: Color(0xff4bbf78),),
+														labelText: 'email'.tr,
+														hintText: 'Indique el email, si agrega varios, sepárelos con una coma (,)',
+														helperText: 'Indique el email, si agrega varios, sepárelos con una coma (,)',
+													),
+													controller: resultController.emailTextController,
+												),
+
+												const SizedBox(
+													height: 30.0,
+												),
+												
+												ElevatedButton(
+													style: ElevatedButton.styleFrom(
+														backgroundColor: const Color(0xffa3fb82),
+														shape: RoundedRectangleBorder(
+															borderRadius: BorderRadius.circular(15),
+														),
+													),
+													onPressed: () {
+														resultController.sendEmail();
+													},
+													child: const Text('Enviar',
+														style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31)),
+													),
+												)
+											],
+										)
+									);
 								},
 								child: Text('send_email'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
 							),

@@ -313,7 +313,7 @@ class FormCalculationScreen extends StatelessWidget {
 					ListTile(
 						title: Text('app_title'.tr),
 						onTap: () {
-							Navigator.pop(context);
+							Get.toNamed('intro');
 						},
 					),
 					ListTile(

@@ -17,12 +17,12 @@ class SliderModel {
 
 	int? codigo;
 	String? mensaje;
-	List<Slider?>? slider;
+	List<SliderObj?>? slider;
 
 	factory SliderModel.fromJson(Map<String, dynamic> json) => SliderModel(
 		codigo: json["codigo"],
 		mensaje: json["mensaje"],
-		slider: json["slider"] == null ? [] : List<Slider?>.from(json["slider"]!.map((x) => Slider.fromJson(x))),
+		slider: json["slider"] == null ? [] : List<SliderObj?>.from(json["slider"]!.map((x) => SliderObj.fromJson(x))),
 	);
 
 	Map<String, dynamic> toJson() => {
@@ -32,8 +32,8 @@ class SliderModel {
 	};
 }
 
-class Slider {
-	Slider({
+class SliderObj {
+	SliderObj({
 		this.id,
 		this.titulo,
 		this.imagen,
@@ -45,7 +45,7 @@ class Slider {
 	String? imagen;
 	String? texto;
 
-	factory Slider.fromJson(Map<String, dynamic> json) => Slider(
+	factory SliderObj.fromJson(Map<String, dynamic> json) => SliderObj(
 		id: json["id"],
 		titulo: json["titulo"],
 		imagen: json["imagen"],

@@ -23,9 +23,9 @@ class RecuperateScreen extends StatelessWidget {
 				body: LayoutBuilder(
 					builder: (context, constraints) {
 						if (constraints.maxWidth > 600) {
-						return _buildLargeScreen(size);
+							return _buildLargeScreen(size);
 						} else {
-						return _buildSmallScreen(size);
+							return _buildSmallScreen(size);
 						}
 					},
 				),
@@ -73,14 +73,13 @@ class RecuperateScreen extends StatelessWidget {
 			crossAxisAlignment: CrossAxisAlignment.start,
 			mainAxisAlignment: size.width > 600 ? MainAxisAlignment.center : MainAxisAlignment.start,
 			children: [
-				size.width > 600
-						? Container()
-						: Lottie.asset(
-							'assets/wave.json',
-							height: size.height * 0.2,
-							width: size.width,
-							fit: BoxFit.fill,
-						),
+				Center(
+					child: Image.asset(
+						'assets/logoid2.png',
+						height: 140,
+						width: 400,
+					),
+				),
 
 				SizedBox(
 					height: size.height * 0.03,

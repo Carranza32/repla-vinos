@@ -92,4 +92,26 @@ class ApiProvider {
 		  return false;
 		}
 	}
+
+	Future<bool?> updateProfile(Map<String, dynamic> body) async {
+		try {
+			Usuario user = GetStorage().read('user');
+
+			final response = await http.post(
+				Uri.parse('${_baseUrl}usuario'),
+				body: body,
+				headers: {
+					HttpHeaders.authorizationHeader: user.llaveApi ?? ''
+				}
+			);
+
+			if (response.statusCode != HttpStatus.created) {
+				return false;
+			}
+
+			return true;
+		} catch (e) {
+		  return false;
+		}
+	}
 }

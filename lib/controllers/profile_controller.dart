@@ -27,7 +27,25 @@ class ProfileController extends GetxController {
 		super.onInit();
 	}
 
-	void updateProfile(){
+	void updateProfile() async {
+		try {
+			var body = <String, dynamic>{};
 
+			body['usuario[nombre]'] = nameTextController.text;
+			body['usuario[email]'] = emailTextController.text;
+			body['usuario[clave]'] = passwordTextController.text;
+
+			final response = await provider.updateProfile(body);
+
+			Get.back();
+
+			if (response == true) {			
+				Get.snackbar("Éxito", 'Perfil actualizado', snackPosition: SnackPosition.BOTTOM);
+			}else{
+				Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
+			}
+		} catch (e) {
+			Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
+		}
 	}
 }

@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
 									child: Container(
 										alignment: Alignment.center,
 										margin: const EdgeInsets.only(top: 75),
-										width: MediaQuery.of(context).size.width * 0.93,
+										width: size.width > 800 ? size.width * 0.67 : size.width * 0.85,
 										padding: const EdgeInsets.all(15),
 										decoration: const BoxDecoration(
 											color: Colors.white,
@@ -77,6 +77,7 @@ class ProfileScreen extends StatelessWidget {
 												/// Gmail
 												TextFormField(
 													style: kTextFormFieldStyle(),
+													enabled: false,
 													controller: profileController.emailTextController,
 													decoration: authFormFieldStyle().copyWith(
 														prefixIcon: const Icon(Icons.email_rounded, color: Color(0xff4bbf78)),
@@ -94,13 +95,15 @@ class ProfileScreen extends StatelessWidget {
 												TextFormField(
 													style: kTextFormFieldStyle(),
 													controller: profileController.passwordTextController,
+													obscureText: true,
+													autocorrect: false,
 													decoration: authFormFieldStyle().copyWith(
 														prefixIcon: const Icon(Icons.lock_open, color: Color(0xff4bbf78)),
 														labelText: "password".tr,
 														hintText: "password_hint".tr,
 													),
 													// The validator receives the text that the user has entered.
-													validator: (value) => (value!.isMinString) ? null : 'digits'.tr
+													// validator: (value) => (value!.isMinString) ? null : 'digits'.tr
 												),
 												SizedBox(
 													height: size.height * 0.02,
@@ -108,6 +111,8 @@ class ProfileScreen extends StatelessWidget {
 
 												TextFormField(
 													style: kTextFormFieldStyle(),
+													obscureText: true,
+													autocorrect: false,
 													controller: profileController.passwordRepeatTextController,
 													decoration: authFormFieldStyle().copyWith(
 														prefixIcon: const Icon(Icons.lock_open, color: Color(0xff4bbf78)),
@@ -115,7 +120,7 @@ class ProfileScreen extends StatelessWidget {
 														hintText: "password_confirm".tr,
 													),
 													// The validator receives the text that the user has entered.
-													validator: (value) => (value!.isMinString) ? null : 'digits'.tr
+													// validator: (value) => (value!.isMinString) ? null : 'digits'.tr
 												),
 												SizedBox(
 													height: size.height * 0.02,

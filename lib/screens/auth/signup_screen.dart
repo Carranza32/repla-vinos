@@ -23,11 +23,11 @@ class SignUpScreen extends StatelessWidget {
 				resizeToAvoidBottomInset: false,
 				body: LayoutBuilder(
 					builder: (context, constraints) {
-					if (constraints.maxWidth > 600) {
-						return _buildLargeScreen(size, theme);
-					} else {
-						return _buildSmallScreen(size, theme);
-					}
+						if (constraints.maxWidth > 600) {
+							return _buildLargeScreen(size, theme);
+						} else {
+							return _buildSmallScreen(size, theme);
+						}
 					},
 				)
 			),
@@ -36,26 +36,32 @@ class SignUpScreen extends StatelessWidget {
 
 	/// For large screens
 	Widget _buildLargeScreen(Size size, ThemeData theme) {
-		return Row(
-			children: [
-				Expanded(
-					flex: 4,
-					child: RotatedBox(
-						quarterTurns: 0,
-						child: Image.asset(
-							'assets/132033-green-login.gif',
-							height: size.height * 0.5,
-							width: double.infinity,
-							fit: BoxFit.contain,
+		return Container(
+			padding: EdgeInsets.symmetric(horizontal: size.width > 800 ? size.width * 0.09 : size.width * 0.001),
+			child: Row(
+				crossAxisAlignment: CrossAxisAlignment.stretch,
+				mainAxisSize: MainAxisSize.max,
+				mainAxisAlignment: MainAxisAlignment.center,
+				children: [
+					Expanded(
+						flex: 4,
+						child: RotatedBox(
+							quarterTurns: 0,
+							child: Image.asset(
+								'assets/132033-green-login.gif',
+								height: size.height * 0.5,
+								width: double.infinity,
+								fit: BoxFit.contain,
+							),
 						),
 					),
-				),
-				SizedBox(width: size.width * 0.06),
-				Expanded(
-					flex: 5,
-					child: _buildMainBody(size, theme),
-				),
-			],
+					SizedBox(width: size.width * 0.06),
+					Expanded(
+						flex: 5,
+						child: _buildMainBody(size, theme),
+					),
+				],
+			),
 		);
 	}
 
@@ -68,24 +74,22 @@ class SignUpScreen extends StatelessWidget {
 
 	/// Main Body
 	Widget _buildMainBody(Size size, ThemeData theme) {
-		return SingleChildScrollView(
-			primary: true,
-		  child: Column(
-		  	crossAxisAlignment: CrossAxisAlignment.start,
-		  	mainAxisAlignment:
-		  		size.width > 600 ? MainAxisAlignment.center : MainAxisAlignment.start,
-		  	children: [
-		  		size.width > 600
-		  			? Container()
-		  			: Lottie.asset(
-		  				'assets/wave.json',
-		  				height: size.height * 0.2,
-		  				width: size.width,
-		  				fit: BoxFit.fill,
-		  			),
+		return Column(
+			crossAxisAlignment: CrossAxisAlignment.start,
+			mainAxisAlignment:size.width > 600 ? MainAxisAlignment.center : MainAxisAlignment.start,
+			children: [
+		  		Center(
+					child: Image.asset(
+						'assets/logoid2.png',
+						height: 140,
+						width: 400,
+					),
+				),
+
 		  		SizedBox(
 		  			height: size.height * 0.03,
 		  		),
+				
 		  		Padding(
 		  			padding: const EdgeInsets.only(left: 20.0),
 		  			child: Text(
@@ -149,6 +153,8 @@ class SignUpScreen extends StatelessWidget {
 		  					TextFormField(
 		  						style: kTextFormFieldStyle(),
 		  						controller: authController.passwordTextController,
+								obscureText: true,
+								autocorrect: false,
 		  						decoration: authFormFieldStyle().copyWith(
 		  							prefixIcon: const Icon(Icons.lock_open, color: Color(0xff4bbf78)),
 		  							labelText: "password".tr,
@@ -193,8 +199,9 @@ class SignUpScreen extends StatelessWidget {
 		  									style: kHaveAnAccountStyle(size),
 		  									children: [
 		  										TextSpan(
-		  											text: "login".tr,
-		  											style: kLoginOrSignUpTextStyle(size)),
+		  											text: " ${"login".tr}",
+		  											style: kLoginOrSignUpTextStyle(size)
+												),
 		  									],
 		  								),
 		  							),
@@ -204,7 +211,6 @@ class SignUpScreen extends StatelessWidget {
 		  			),
 		  		),
 		  	],
-		  ),
 		);
 	}
 

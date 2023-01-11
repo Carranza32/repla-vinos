@@ -4,6 +4,7 @@ import 'package:custom_sliding_segmented_control/custom_sliding_segmented_contro
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:repla_vinos/constants.dart';
 import 'package:repla_vinos/controllers/calculation_controller.dart';
@@ -11,6 +12,7 @@ import 'package:select_dialog/select_dialog.dart';
 
 
 import '../models/plaguidas_model.dart';
+import '../models/user_model.dart';
 
 class FormCalculationScreen extends StatelessWidget {
 	final CalculationController calculationController = Get.put(CalculationController());
@@ -21,6 +23,7 @@ class FormCalculationScreen extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
 		final textTheme = Theme.of(context).textTheme;
+		var size = MediaQuery.of(context).size;
 
 		return SafeArea(
 			child: Scaffold(
@@ -33,9 +36,9 @@ class FormCalculationScreen extends StatelessWidget {
 						key: _formKey,
 						child: Column(
 							children: [
-								_header(context, textTheme, calculationController),							
+								_header(context, textTheme, calculationController, size),							
 								SizedBox(
-								width: MediaQuery.of(context).size.width * 0.85,
+								width: size.width > 800 ? size.width * 0.67 : size.width * 0.85,
 								child: ListView(
 								primary: false,
 								shrinkWrap: true,
@@ -146,9 +149,12 @@ class FormCalculationScreen extends StatelessWidget {
 										inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}'))],
 									),
 
-									const SizedBox(height: 15),
+									const SizedBox(height: 25),
 
-									_formButton(context),
+									Padding(
+										padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+										child: _formButton(context),
+									),
 
 									const SizedBox(height: 25),
 								],
@@ -162,7 +168,7 @@ class FormCalculationScreen extends StatelessWidget {
 		);
 	}
 
-	Widget _header(context, textTheme, CalculationController calculationController) {
+	Widget _header(context, textTheme, CalculationController calculationController, size) {
 
 		return Stack(
 			clipBehavior: Clip.none,
@@ -185,7 +191,7 @@ class FormCalculationScreen extends StatelessWidget {
 				  child: Container(
 					alignment: Alignment.center,
 					margin: const EdgeInsets.only(top: 75),
-				  	width: MediaQuery.of(context).size.width * 0.93,
+				  	width: size.width > 800 ? size.width * 0.70 : size.width * 0.95,
 				  	padding: const EdgeInsets.all(15),
 				  	decoration: const BoxDecoration(
 				  		color: Colors.white,
@@ -294,15 +300,27 @@ class FormCalculationScreen extends StatelessWidget {
 	}
 
 	Widget _drawer(context){
+		Usuario user = Usuario();
+		
+		try {
+		  	user = GetStorage().read('user');
+		} catch (e) {
+		 	user = Usuario();
+		}
+
 		return Drawer(
 			child: ListView(
 				padding: EdgeInsets.zero,
 				children: [
-					const DrawerHeader(
-						decoration: BoxDecoration(
+					UserAccountsDrawerHeader(
+						currentAccountPicture: const CircleAvatar(
+                  	backgroundImage: AssetImage('assets/logoid.png'),
+                	),
+						decoration: const BoxDecoration(
 							color: Color(0xff11ab6a),
 						),
-						child: Text('Drawer Header'),
+						accountEmail: Text(user.email ?? ''),
+						accountName: Text(user.nombre ?? '', style: const TextStyle(fontSize: 24.0)),
 					),
 					ListTile(
 						title: Text('profile'.tr),

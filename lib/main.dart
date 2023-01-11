@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return GetMaterialApp(
 			debugShowCheckedModeBanner: false,
-			title: 'app_title'.tr,
+			title: 'Repla vinos',
 			getPages: Routes.route,
 			initialRoute: 'splash',
 			locale: const Locale('es', 'ES'),

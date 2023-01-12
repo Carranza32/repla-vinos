@@ -16,7 +16,8 @@ class ResultController extends GetxController {
 	@override
 	void onReady() {
 		try {
-		  	Usuario user = GetStorage().read('user');
+		  	var data = GetStorage().read('user');
+			var user = (data is Usuario) ? data : Usuario.fromJson(data);
 
 			emailTextController.text = user.email!;
 		} catch (e) {

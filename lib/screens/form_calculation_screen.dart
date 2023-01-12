@@ -301,9 +301,10 @@ class FormCalculationScreen extends StatelessWidget {
 
 	Widget _drawer(context){
 		Usuario user = Usuario();
+		var data = GetStorage().read('user');
 		
-		try {
-		  	user = GetStorage().read('user');
+		try {		  	
+			user = (data is Usuario) ? data : Usuario.fromJson(data);
 		} catch (e) {
 		 	user = Usuario();
 		}

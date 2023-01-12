@@ -15,7 +15,8 @@ class ProfileController extends GetxController {
 	@override
 	void onInit() {
 		try {
-			Usuario user = GetStorage().read('user');
+			var data = GetStorage().read('user');
+			var user = (data is Usuario) ? data : Usuario.fromJson(data);
 
 			nameTextController.text = user.nombre!;
 			emailTextController.text = user.email!;

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +79,7 @@ class CalculationController extends GetxController {
 					child: CircularProgressIndicator(),
 				),
 				barrierDismissible: false
-			);			
+			);
 
 			final response = await provider.plaguicidas();
 

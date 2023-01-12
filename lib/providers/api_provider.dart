@@ -12,7 +12,8 @@ class ApiProvider {
 	final _baseUrl = "https://api.replavinos.cl/";
 
 	Future<CalculoResponseModel?> calculo(Map<String, dynamic> body) async {
-		Usuario user = GetStorage().read('user');
+		var data = GetStorage().read('user');
+		var user = (data is Usuario) ? data : Usuario.fromJson(data);
 
 		final response = await http.post(
 			Uri.parse('${_baseUrl}calculo'),
@@ -31,7 +32,8 @@ class ApiProvider {
 
 	Future<List<Plaguicida?>?> plaguicidas() async {
 		try {
-			Usuario user = GetStorage().read('user');
+			var data = GetStorage().read('user');
+			var user = (data is Usuario) ? data : Usuario.fromJson(data);
 
 			final response = await http.post(
 				Uri.parse('${_baseUrl}plaguicidas'),
@@ -52,7 +54,8 @@ class ApiProvider {
 
 	Future<List<SliderObj?>?> getSliders() async {
 		try {
-			Usuario user = GetStorage().read('user');
+			var data = GetStorage().read('user');
+			var user = (data is Usuario) ? data : Usuario.fromJson(data);
 
 			final response = await http.post(
 				Uri.parse('${_baseUrl}slider'),
@@ -73,7 +76,8 @@ class ApiProvider {
 
 	Future<bool?> sendEmails(Map<String, dynamic> body) async {
 		try {
-			Usuario user = GetStorage().read('user');
+			var data = GetStorage().read('user');
+			var user = (data is Usuario) ? data : Usuario.fromJson(data);
 
 			final response = await http.post(
 				Uri.parse('${_baseUrl}resultados'),
@@ -95,7 +99,8 @@ class ApiProvider {
 
 	Future<bool?> updateProfile(Map<String, dynamic> body) async {
 		try {
-			Usuario user = GetStorage().read('user');
+			var data = GetStorage().read('user');
+			var user = (data is Usuario) ? data : Usuario.fromJson(data);
 
 			final response = await http.post(
 				Uri.parse('${_baseUrl}usuario'),

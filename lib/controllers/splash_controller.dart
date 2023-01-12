@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:repla_vinos/models/user_model.dart';
 
 class SplashController extends GetxController {
 	@override
 	void onReady() {
 		try {
-			var token = GetStorage().read('user');
+			var data = GetStorage().read('user');
+			var user = (data is Usuario) ? data : Usuario.fromJson(data);
+
 			var slider = GetStorage().read('slider_showed');
 
 			if (slider == false || slider == null) {
@@ -15,7 +18,7 @@ class SplashController extends GetxController {
 				return;
 			}
 
-			if (token != null) {
+			if (user.llaveApi != null) {
 				Get.offAllNamed("form_calculation");
 			}else{
 				Get.offAllNamed("login");

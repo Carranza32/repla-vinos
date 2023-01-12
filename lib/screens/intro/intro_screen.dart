@@ -43,3 +43,19 @@ final pages = [
 		),
 	)
 ];
+
+final webPages = [
+	PageViewModel(
+		pageColor: const Color(0xFF607D8B),
+		iconImageAssetPath: 'assets/sidal.png',
+		title: const Text(intro_tittle_p3),
+		body: const Text(intro_text_p3),
+		textStyle: const TextStyle(fontFamily: 'MyFont', color: Colors.white),
+		mainImage: Image.asset(
+			'assets/sidal.png',
+			height: 285.0,
+			width: 285.0,
+			alignment: Alignment.center,
+		),
+	)
+];

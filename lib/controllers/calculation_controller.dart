@@ -17,12 +17,6 @@ class CalculationController extends GetxController {
 	Plaguicida selectedPlaguicida = Plaguicida();
 
 	@override
-  void onInit() {
-		getPlaguicidas();
-		super.onInit();
-  }
-
-	@override
 	void onReady() {
 		getPlaguicidas();
 

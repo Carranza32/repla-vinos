@@ -42,11 +42,11 @@ class ApiProvider {
 				}
 			);
 
-			if (response.statusCode != HttpStatus.created) {
+			if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
+				return PlaguicidasModel.fromJson( jsonDecode(response.body) ).plaguicidas;
+			}else{
 				return null;
 			}
-
-			return PlaguicidasModel.fromJson( jsonDecode(response.body) ).plaguicidas;
 		} catch (e) {
 		  return null;
 		}
@@ -64,11 +64,11 @@ class ApiProvider {
 				}
 			);
 
-			if (response.statusCode != HttpStatus.created) {
+			if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
+				return SliderModel.fromJson( jsonDecode(response.body) ).slider;
+			}else{
 				return null;
 			}
-
-			return SliderModel.fromJson( jsonDecode(response.body) ).slider;
 		} catch (e) {
 		  return null;
 		}
@@ -87,11 +87,11 @@ class ApiProvider {
 				}
 			);
 
-			if (response.statusCode != HttpStatus.created) {
+			if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
+				return true;
+			}else{
 				return false;
-			}
-
-			return true;
+			}			
 		} catch (e) {
 		  return false;
 		}
@@ -104,17 +104,17 @@ class ApiProvider {
 
 			final response = await http.post(
 				Uri.parse('${_baseUrl}usuario'),
-				body: body,
+				body: body, 
 				headers: {
 					HttpHeaders.authorizationHeader: user.llaveApi ?? ''
 				}
 			);
 
-			if (response.statusCode != HttpStatus.created) {
+			if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
+				return true;
+			}else{
 				return false;
-			}
-
-			return true;
+			}	
 		} catch (e) {
 		  return false;
 		}

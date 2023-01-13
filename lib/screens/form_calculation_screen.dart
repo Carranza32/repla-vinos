@@ -338,6 +338,7 @@ class FormCalculationScreen extends StatelessWidget {
 					ListTile(
 						title: Text('log_out'.tr),
 						onTap: () {
+							GetStorage().remove('user');
 							Get.offAllNamed("login");
 						},
 					),

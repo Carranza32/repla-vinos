@@ -11,10 +11,18 @@ import '../models/calculo_response_model.dart';
 class ResultController extends GetxController {
 	final emailTextController = TextEditingController();
 	final provider = ApiProvider();
-	Resultado resultado = Get.arguments[0]['resultado'];
+	Resultado resultado = Resultado();
 	
 	@override
 	void onReady() {
+		var arguments = Get.arguments;
+
+		if (arguments == null) {
+			Get.offAllNamed("form_calculation");
+		}
+
+		resultado = Get.arguments[0]['resultado'];
+		
 		try {
 		  	var data = GetStorage().read('user');
 			var user = (data is Usuario) ? data : Usuario.fromJson(data);
@@ -34,7 +42,7 @@ class ResultController extends GetxController {
 			var f2 = resultado.f2!.split(" ");
 			var f3 = resultado.f3!.split(" ");
 			var f4 = resultado.f4!.split(" ");
-			var date = DateFormat('dd/MM/yyyy').parse(resultado.txtBq2![1] ?? '');
+			var date = DateFormat('dd-MM-yyyy').parse(resultado.txtBq2![1] ?? '');
 
 			var dt1 = DateFormat('dd-MM-yyyy').parse(f1[2]);
 			var dt2 = DateFormat('dd-MM-yyyy').parse(f2[2]);

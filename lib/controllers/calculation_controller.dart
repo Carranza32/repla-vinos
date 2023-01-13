@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:repla_vinos/models/plaguidas_model.dart';
 import 'package:repla_vinos/providers/api_provider.dart';
 
@@ -41,6 +39,8 @@ class CalculationController extends GetxController {
 				),
 				barrierDismissible: false
 			);
+			final DateFormat formatter = DateFormat('yyyy/MM/dd');
+			var fecha = DateFormat('dd/MM/yyyy').parse(fechaTextController.text);
 
 		  	var body = <String, dynamic>{};
 		
@@ -48,7 +48,7 @@ class CalculationController extends GetxController {
 			body['datos[diametro]'] = diametroTextController.text;
 			body['datos[plaguicida]'] = selectedPlaguicida.id;
 			body['datos[dosis]'] = dosisTextController.text;
-			body['datos[fecha_aplicacion]'] = fechaTextController.text;
+			body['datos[fecha_aplicacion]'] = formatter.format(fecha);
 			body['datos[so]'] = defaultTargetPlatform.name.toString();
 
 			final response = await provider.calculo(body);

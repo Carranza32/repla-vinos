@@ -10,29 +10,7 @@ class ResultScreen extends StatelessWidget {
 	ResultScreen({super.key});
 	final ResultController resultController = Get.put(ResultController());
 
-	// Resultado resultado = Get.arguments[0]['resultado'];
-
-	Resultado resultado = Resultado(
-		titulo: 'Azoxystrobin',
-		txtBq1: [
-			"Nivel aproximado de residuo en vino ",
-			"TINTO",
-			" en base a fecha de cosecha estimada. "
-		],
-		txtBq2: [
-			"Resultados obtenidos en base a la fecha de aplicación ",
-			"07/01/2023",
-			", uva ",
-			"5(mm)",
-			" y dosis ",
-			"230(g activo/ha)."
-		],
-		f1: '0.1 (mg/kg) 01-01-1970',
-		f2: '0.05 (mg/kg) 01-01-1970',
-		f3: '0.01 (mg/kg) 01-01-1970',
-		f4: '0.04 (mg/kg) 01-01-1970',
-		pie: 'Las fechas de cosecha son referenciales y han sido obtenidas a partir de curvas de disperción en campo y estudios de traspaso de residuos de poluguicidas en el proceso de vinificación.',
-	);	
+	Resultado resultado = Get.arguments[0]['resultado'];
 
 	@override
 	Widget build(BuildContext context) {

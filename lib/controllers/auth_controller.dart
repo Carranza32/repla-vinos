@@ -105,10 +105,9 @@ class AuthController extends GetxController{
 		final response = await _authProvider.restartPassword(body);
 
 		if (response != true) {
-			Get.rawSnackbar(message: "wrong_try_again".tr);
-			// Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);		
+			Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
 		}else{
-			
+			Get.snackbar("Éxito", "Correo enviado", snackPosition: SnackPosition.BOTTOM);
 		}
 	}
 

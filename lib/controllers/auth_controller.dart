@@ -76,7 +76,7 @@ class AuthController extends GetxController{
 
 		var body = <String, dynamic>{};
 		
-		body['usuario[email]'] = nameTextController.text;
+		body['usuario[nombre]'] = nameTextController.text;
 		body['usuario[email]'] = emailTextController.text;
 		body['usuario[clave]'] = passwordTextController.text;
 
@@ -85,8 +85,8 @@ class AuthController extends GetxController{
 		Get.back();
 
 		if (response != null) {
-			if (response.usuario!.isNotEmpty) {
-			   storage.write('user', response.usuario![0]); 
+			if (response.usuario != null) {
+			   storage.write('user', response.usuario); 
 				Get.offAllNamed("form_calculation");
 			}else{
 				Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);

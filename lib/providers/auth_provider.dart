@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:http/http.dart' as http;
+import 'package:repla_vinos/models/register_response_model.dart';
 import 'package:repla_vinos/models/user_model.dart';
 
 class AuthProvider {
@@ -21,22 +22,26 @@ class AuthProvider {
 		}
 	}
 
-	Future<UserModel?> signup(Map<String, dynamic> body) async {
-		final response = await http.post(
-			Uri.parse('${_baseUrl}usuario/registro'),
-			body: body,
-    	);
+	Future<RegisterResponseModel?> signup(Map<String, dynamic> body) async {
+		try {
+			final response = await http.post(
+				Uri.parse('${_baseUrl}usuario/registro'),
+				body: body,
+			);
 
-		if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
-			var created = UserModel.fromJson( jsonDecode(response.body) );
+			if (response.statusCode == HttpStatus.created || response.statusCode == HttpStatus.ok) {
+				var created = RegisterResponseModel.fromJson( jsonDecode(response.body) );
 
-			if (created.usuario == null) {
+				if (created.usuario == null) {
+					return null;
+				}
+
+				return created;
+			}else{
 				return null;
 			}
-
-			return created;
-		}else{
-			return null;
+		} catch (e) {
+		  	return null;
 		}
 	}
 

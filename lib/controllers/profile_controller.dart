@@ -38,10 +38,14 @@ class ProfileController extends GetxController {
 
 			final response = await provider.updateProfile(body);
 
-			Get.back();
-
-			if (response == true) {			
+			if (response == true) {
 				Get.snackbar("Éxito", 'Perfil actualizado', snackPosition: SnackPosition.BOTTOM);
+				var data = GetStorage().read('user');
+				var user = (data is Usuario) ? data : Usuario.fromJson(data);
+
+				user.nombre = nameTextController.text;
+
+				GetStorage().write('user', user); 
 			}else{
 				Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
 			}

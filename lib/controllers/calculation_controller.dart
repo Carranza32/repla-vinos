@@ -8,8 +8,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:repla_vinos/models/plaguidas_model.dart';
 import 'package:repla_vinos/providers/api_provider.dart';
 
-import '../models/user_model.dart';
-
 class CalculationController extends GetxController {
 	final provider = ApiProvider();
 	final fechaTextController = TextEditingController();

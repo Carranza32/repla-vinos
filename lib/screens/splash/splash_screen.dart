@@ -13,8 +13,8 @@ class SplashScreen extends StatelessWidget {
 		return Scaffold(
 			body: Center(
 				child: Image.asset(
-					'assets/sidal.png',
-					height: 75,
+					'assets/logoid2.png',
+					height: 200,
 				),
 			),
 		);

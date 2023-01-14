@@ -67,8 +67,10 @@ class SignUpScreen extends StatelessWidget {
 
 	/// For Small screens
 	Widget _buildSmallScreen(Size size, ThemeData theme) {
-		return Center(
-			child: _buildMainBody(size, theme),
+		return SingleChildScrollView(
+			child: Center(
+				child: _buildMainBody(size, theme),
+			),
 		);
 	}
 

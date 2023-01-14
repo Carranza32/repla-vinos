@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -49,20 +50,23 @@ class IntroSlider extends StatelessWidget {
 	}
 
 	Widget introSliderWeb(TextTheme textTheme, Size size){
+		var imageSize = (size.width > 600) ? 200.0 : 150.0;
+
 		List<Widget> expanded = [
 			Expanded(
 				flex: 1,
 				child: Container(
 					color: const Color.fromARGB(180, 219, 234, 109),
+					height: size.height,
 					child: Column(
 						mainAxisAlignment: MainAxisAlignment.spaceAround,
 						children:  [
 							Text('Repla Vinos', style: textTheme.headline3?.copyWith(fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 170, 214, 8))),
-							Image.network('https://api.replavinos.cl/images/logoid.png', width: 200),
+							Image.network('https://api.replavinos.cl/images/logoid.png', width: imageSize ),
 							Padding(
 								padding: const EdgeInsets.symmetric(horizontal: 15),
-								child: Text('Esta Aplicación forma parte del Proyecto del Consorcio I+D Vinos de Chile: Curvas de Disperción, Tasas de Transferencia y Carencias para Pluguicidas. Esta es una herramienta que permite estimar de manera referencial, periodos de resguardo para el uso de plaguicidas en el sector vitivinícola.', 
-								style: textTheme.bodyMedium
+								child: AutoSizeText('Esta Aplicación forma parte del Proyecto del Consorcio I+D Vinos de Chile: Curvas de Disperción, Tasas de Transferencia y Carencias para Pluguicidas. Esta es una herramienta que permite estimar de manera referencial, periodos de resguardo para el uso de plaguicidas en el sector vitivinícola.', 
+								style: TextStyle(fontSize: size.width * 0.005),
 								),
 							),
 						],
@@ -73,14 +77,15 @@ class IntroSlider extends StatelessWidget {
 				flex: 1,
 				child: Container(
 					color: const Color.fromARGB(180, 219, 222, 78),
+					height: size.height,
 					child: Column(
 						mainAxisAlignment: MainAxisAlignment.spaceAround,
 						children:  [
 							Text('Repla Vinos', style: textTheme.headline3?.copyWith(fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 153, 156, 0))),
-							Image.network('https://api.replavinos.cl/images/logo_corfo.png', width: 200),
+							Image.network('https://api.replavinos.cl/images/logo_corfo.png', width: imageSize),
 							Padding(
 								padding: const EdgeInsets.symmetric(horizontal: 15),
-								child: Text('Contó con el apoyo de CORFO.', 
+								child: AutoSizeText('Contó con el apoyo de CORFO.', 
 								style: textTheme.bodyLarge
 								),
 							),
@@ -92,14 +97,15 @@ class IntroSlider extends StatelessWidget {
 				flex: 1,
 				child: Container(
 					color: const Color.fromARGB(180, 173, 197, 83),
+					height: size.height,
 					child: Column(
 						mainAxisAlignment: MainAxisAlignment.spaceAround,
 						children:  [
 							Text('Repla Vinos', style: textTheme.headline3?.copyWith(fontWeight: FontWeight.bold, color: const Color(0xff119c45))),
-							Image.network('https://api.replavinos.cl/images/sidal.png', width: 200),
+							Image.network('https://api.replavinos.cl/images/sidal.png', width: imageSize),
 							Padding(
 								padding: const EdgeInsets.symmetric(horizontal: 15),
-								child: Text('Fue desarrollada por SIDAL', 
+								child: AutoSizeText('Fue desarrollada por SIDAL', 
 								style: textTheme.bodyLarge
 								),
 							),
@@ -110,55 +116,31 @@ class IntroSlider extends StatelessWidget {
 		];
 
 		return Scaffold(
-			body: Stack(
-				children: [
-					(size.width > 800) ? Row(
-						children: expanded,
-					) : Column(
-						mainAxisSize: MainAxisSize.max,
-						crossAxisAlignment: CrossAxisAlignment.stretch,
-						children: expanded,
-					),
+			floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+			floatingActionButton: FloatingActionButton(
+				backgroundColor: const Color(0xff119c45),
+				onPressed: () {
+					try {
+						var data = GetStorage().read('user');
+						var user = (data is Usuario) ? data : Usuario.fromJson(data);
 
-					Positioned.fill(
-						bottom: 50,						
-						child: Container(
-							alignment: Alignment.bottomCenter,
-							width: 200,
-							height: 55,
-							child: ElevatedButton(
-								style: ElevatedButton.styleFrom(
-									padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-									backgroundColor: const Color(0xffa3fb82),
-									shape: RoundedRectangleBorder(
-										borderRadius: BorderRadius.circular(15),
-									),
-								),
-								onPressed: () {
-									try {
-										var data = GetStorage().read('user');
-										var user = (data is Usuario) ? data : Usuario.fromJson(data);
-
-										if (user.llaveApi != null) {
-											Get.toNamed("form_calculation");						  
-										}else{
-											Get.offAllNamed("login");
-										}
-									} catch (e) {
-										Get.offAllNamed("login");
-									}
-								},
-								child: Row(
-									mainAxisSize: MainAxisSize.min,
-									children: const [
-										Text('Siguiente', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
-										Icon(Icons.arrow_forward_ios_rounded)
-									],
-								),
-							),
-						),
-					)
-				],
+						if (user.llaveApi != null) {
+							Get.toNamed("form_calculation");						  
+						}else{
+							Get.offAllNamed("login");
+						}
+					} catch (e) {
+						Get.offAllNamed("login");
+					}
+				},
+				child: const Icon(Icons.arrow_forward_ios_rounded),
+			),
+			body: (size.width > 800) ? Row(
+				children: expanded,
+			) : Column(
+				mainAxisSize: MainAxisSize.max,
+				crossAxisAlignment: CrossAxisAlignment.stretch,
+				children: expanded,
 			),
 		);
 	}

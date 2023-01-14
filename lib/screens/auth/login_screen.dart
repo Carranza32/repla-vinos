@@ -67,9 +67,9 @@ class LoginScreen extends StatelessWidget {
 	/// For Small screens
 	Widget _buildSmallScreen(Size size) {
 			return SingleChildScrollView(
-			  child: Center(
-			  	child: _buildMainBody(size),
-			  ),
+				child: Center(
+					child: _buildMainBody(size),
+				),
 			);
 		}
 

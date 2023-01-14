@@ -46,6 +46,9 @@ class ProfileController extends GetxController {
 				user.nombre = nameTextController.text;
 
 				GetStorage().write('user', user); 
+
+				passwordTextController.text = '';
+				passwordRepeatTextController.text = '';
 			}else{
 				Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
 			}

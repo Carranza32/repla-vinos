@@ -7,7 +7,11 @@ class SplashController extends GetxController {
 	void onReady() {
 		try {
 			var data = GetStorage().read('user');
-			var user = (data is Usuario) ? data : Usuario.fromJson(data);
+			Usuario user = Usuario();
+
+			if (data != null) {
+			  	user = (data is Usuario) ? data : Usuario.fromJson(data);
+			}
 
 			var slider = GetStorage().read('slider_showed');
 

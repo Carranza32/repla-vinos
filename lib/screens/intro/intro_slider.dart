@@ -53,11 +53,11 @@ class IntroSlider extends StatelessWidget {
 			Expanded(
 				flex: 1,
 				child: Container(
-					color: const Color(0xfff2e8ff),
+					color: const Color.fromARGB(180, 219, 234, 109),
 					child: Column(
 						mainAxisAlignment: MainAxisAlignment.spaceAround,
 						children:  [
-							Text('Repla Vinos', style: textTheme.headline3?.copyWith(fontWeight: FontWeight.bold, color: const Color(0xff51449f))),
+							Text('Repla Vinos', style: textTheme.headline3?.copyWith(fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 170, 214, 8))),
 							Image.network('https://api.replavinos.cl/images/logoid.png', width: 200),
 							Padding(
 								padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -72,11 +72,11 @@ class IntroSlider extends StatelessWidget {
 			Expanded(
 				flex: 1,
 				child: Container(
-					color: const Color(0xffe6eeff),
+					color: const Color.fromARGB(180, 219, 222, 78),
 					child: Column(
 						mainAxisAlignment: MainAxisAlignment.spaceAround,
 						children:  [
-							Text('Repla Vinos', style: textTheme.headline3?.copyWith(fontWeight: FontWeight.bold, color: const Color(0xff3162d6))),
+							Text('Repla Vinos', style: textTheme.headline3?.copyWith(fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 153, 156, 0))),
 							Image.network('https://api.replavinos.cl/images/logo_corfo.png', width: 200),
 							Padding(
 								padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -91,7 +91,7 @@ class IntroSlider extends StatelessWidget {
 			Expanded(
 				flex: 1,
 				child: Container(
-					color: const Color(0xffe4faee),
+					color: const Color.fromARGB(180, 173, 197, 83),
 					child: Column(
 						mainAxisAlignment: MainAxisAlignment.spaceAround,
 						children:  [
@@ -128,7 +128,7 @@ class IntroSlider extends StatelessWidget {
 							height: 55,
 							child: ElevatedButton(
 								style: ElevatedButton.styleFrom(
-									padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+									padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
 									backgroundColor: const Color(0xffa3fb82),
 									shape: RoundedRectangleBorder(
 										borderRadius: BorderRadius.circular(15),
@@ -151,7 +151,7 @@ class IntroSlider extends StatelessWidget {
 								child: Row(
 									mainAxisSize: MainAxisSize.min,
 									children: const [
-										Text('Siguiente', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
+										Text('Siguiente', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
 										Icon(Icons.arrow_forward_ios_rounded)
 									],
 								),

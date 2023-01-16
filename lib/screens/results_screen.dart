@@ -48,8 +48,15 @@ class ResultScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      FittedBox(fit: BoxFit.fitWidth, child: Text(resultado.titulo ?? 'No hay resultados', style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.bold, color: Colors.black))),
-                      
+                      FittedBox(
+                        fit: BoxFit.contain, 
+                        child: 
+                          AutoSizeText(
+                            resultado.titulo ?? 'No hay resultados', 
+                            maxLines: 1, 
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black,)
+                          )
+                      ),
                       const SizedBox(height: 25),
       
                       RichText(
@@ -136,7 +143,7 @@ class ResultScreen extends StatelessWidget {
                                       resultController.sendEmail();
                                     },
                                     child: const Text('Enviar',
-                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31)),
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xff111b31)),
                                     ),
                                   )
                                 ],
@@ -144,13 +151,11 @@ class ResultScreen extends StatelessWidget {
                             );
                           },
                           child: 
-                            Center(
-                              child: 
                                 AutoSizeText(
                                     'send_email'.tr, 
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))
-                                )
-                            ),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xff111b31))
+                                ),
                         ),
                       ),
                     ],

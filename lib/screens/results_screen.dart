@@ -48,7 +48,8 @@ class ResultScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      AutoSizeText(resultado.titulo ?? 'No hay resultados', style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.bold, color: Colors.black)),
+                      FittedBox(fit: BoxFit.fitWidth, child: Text(resultado.titulo ?? 'No hay resultados', style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.bold, color: Colors.black))),
+                      
                       const SizedBox(height: 25),
       
                       RichText(

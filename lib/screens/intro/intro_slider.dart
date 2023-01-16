@@ -85,7 +85,7 @@ class IntroSlider extends StatelessWidget {
 							Image.network('https://api.replavinos.cl/images/logo_corfo.png', width: imageSize),
 							Padding(
 								padding: const EdgeInsets.symmetric(horizontal: 15),
-								child: AutoSizeText('Contó con el apoyo de CORFO.', 
+								child: AutoSizeText('Proyecto apoyado por Corfo.', 
 								style: textTheme.bodyLarge
 								),
 							),
@@ -105,7 +105,7 @@ class IntroSlider extends StatelessWidget {
 							Image.network('https://api.replavinos.cl/images/sidal.png', width: imageSize),
 							Padding(
 								padding: const EdgeInsets.symmetric(horizontal: 15),
-								child: AutoSizeText('Fue desarrollada por SIDAL', 
+								child: AutoSizeText('Fue desarrollada por Sidal', 
 								style: textTheme.bodyLarge
 								),
 							),
@@ -117,7 +117,7 @@ class IntroSlider extends StatelessWidget {
 
 		return Scaffold(
 			floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-			floatingActionButton: FloatingActionButton(
+			floatingActionButton: FloatingActionButton.extended(
 				backgroundColor: const Color(0xff119c45),
 				onPressed: () {
 					try {
@@ -133,7 +133,8 @@ class IntroSlider extends StatelessWidget {
 						Get.offAllNamed("login");
 					}
 				},
-				child: const Icon(Icons.arrow_forward_ios_rounded),
+				label: const Text("Ingresar", style: TextStyle(color: Colors.white)),
+        icon: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white,),
 			),
 			body: (size.width > 800) ? Row(
 				children: expanded,

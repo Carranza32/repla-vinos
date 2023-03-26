@@ -135,13 +135,7 @@ class LoginScreen extends StatelessWidget {
 				SizedBox(
 					height: size.height * 0.03,
 				),
-				Padding(
-					padding: const EdgeInsets.only(left: 20.0),
-					child: Text(
-						'login'.tr,
-						style: kLoginTitleStyle(size),
-					),
-				),
+				
 				const SizedBox(
 					height: 10,
 				),
@@ -152,13 +146,21 @@ class LoginScreen extends StatelessWidget {
 					padding: const EdgeInsets.all(20),
 					decoration: BoxDecoration(
 						borderRadius: BorderRadius.circular(10),
-						color: const Color.fromARGB(200, 92, 111, 65),
+						color: const Color.fromARGB(172, 70, 97, 36),
 					),
 					child: Form(
 						key: _formKey,
 						autovalidateMode: AutovalidateMode.onUserInteraction,
 						child: Column(
 							children: [
+								Padding(
+									padding: const EdgeInsets.only(bottom: 5.0),
+									child: Text(
+										'login'.tr,
+										style: kLoginTitleStyle(size),
+									),
+								),
+
 								TextFormField(
 									keyboardType: TextInputType.emailAddress,
 									style: kTextFormFieldStyle(),

@@ -11,7 +11,7 @@ TextStyle kLoginSubtitleStyle(Size size) => GoogleFonts.ubuntu(
 );
 
 TextStyle kLoginTermsAndPrivacyStyle(Size size) =>
-GoogleFonts.ubuntu(fontSize: 15, color: Colors.grey, height: 1.5);
+GoogleFonts.ubuntu(fontSize: 15, color: Colors.white, height: 1.5);
 
 TextStyle kHaveAnAccountStyle(Size size) =>
 GoogleFonts.ubuntu(fontSize: size.height * 0.022, color: Colors.black);

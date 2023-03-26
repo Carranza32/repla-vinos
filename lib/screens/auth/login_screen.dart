@@ -17,17 +17,19 @@ class LoginScreen extends StatelessWidget {
 
 		return GestureDetector(
 			onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-			child: Scaffold(
-				backgroundColor: Colors.white,
-				resizeToAvoidBottomInset: false,
-				body: LayoutBuilder(
-					builder: (context, constraints) {
-						if (constraints.maxWidth > 600) {
-							return _buildLargeScreen(size, context);
-						} else {
-							return _buildSmallScreen(size);
-						}
-					},
+			child: SafeArea(
+				child: Scaffold(
+					backgroundColor: Colors.white,
+					resizeToAvoidBottomInset: false,
+					body: LayoutBuilder(
+						builder: (context, constraints) {
+							if (constraints.maxWidth > 600) {
+								return _buildLargeScreen(size, context);
+							} else {
+								return _buildSmallScreen(size);
+							}
+						},
+					),
 				),
 			),
 		);

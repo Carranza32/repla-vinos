@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:repla_vinos/models/user_model.dart';
 import 'package:repla_vinos/providers/api_provider.dart';
+import 'package:repla_vinos/providers/db_provider.dart';
 
 class ProfileController extends GetxController {
 	final nameTextController = TextEditingController();
@@ -13,13 +14,15 @@ class ProfileController extends GetxController {
 	final provider = ApiProvider();
 	
 	@override
-	void onInit() {
+	void onInit() async {
 		try {
-			var data = GetStorage().read('user');
-			var user = (data is Usuario) ? data : Usuario.fromJson(data);
+			Usuario? user = await DBProvider.db.getUser();
 
-			nameTextController.text = user.nombre!;
-			emailTextController.text = user.email!;
+			if (user != null) {
+				nameTextController.text = user.nombre!;
+				emailTextController.text = user.email!;
+			}
+
 		} catch (e) {
 		  	nameTextController.text = '';
 			emailTextController.text = '';
@@ -40,13 +43,15 @@ class ProfileController extends GetxController {
 
 			if (response == true) {
 				Get.snackbar("Éxito", 'Perfil actualizado', snackPosition: SnackPosition.BOTTOM);
-				var data = GetStorage().read('user');
-				var user = (data is Usuario) ? data : Usuario.fromJson(data);
+				// var data = GetStorage().read('user');
+				// var user = (data is Usuario) ? data : Usuario.fromJson(data);
 
-				user.nombre = nameTextController.text;
+				Usuario? user = await DBProvider.db.getUser();
+				user?.nombre = nameTextController.text;
+				
+				await DBProvider.db.updateUser(user!);
 
-				GetStorage().write('user', user); 
-
+				Get.snackbar("Éxito", 'Perfil actualizado', snackPosition: SnackPosition.BOTTOM);
 				passwordTextController.text = '';
 				passwordRepeatTextController.text = '';
 			}else{

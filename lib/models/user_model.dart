@@ -50,4 +50,10 @@ class Usuario {
 		"nombre": nombre,
 		"email": email,
 	};
+
+	Map<String, dynamic> toMapForDb() => {
+		"llaveApi": llaveApi,
+		"nombre": nombre,
+		"email": email,
+	};
 }

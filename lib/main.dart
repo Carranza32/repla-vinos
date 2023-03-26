@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:repla_vinos/utils/messages_translations.dart';
 import 'package:repla_vinos/utils/router.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() async {
   	await GetStorage.init();

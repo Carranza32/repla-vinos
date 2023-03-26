@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:repla_vinos/providers/auth_provider.dart';
-
+import 'package:repla_vinos/providers/db_provider.dart';
 
 class AuthController extends GetxController{
 	final nameTextController = TextEditingController();
@@ -57,6 +57,9 @@ class AuthController extends GetxController{
 		if (response != null) {
 			if (response.usuario!.isNotEmpty) {
 			   storage.write('user', response.usuario![0]);
+				
+				await DBProvider.db.insertUser(response.usuario![0]!);
+				
 				Get.offAllNamed("form_calculation");
 			}else{
 				Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);
@@ -88,6 +91,8 @@ class AuthController extends GetxController{
 		if (response != null) {
 			if (response.usuario != null) {
 			   storage.write('user', response.usuario); 
+				await DBProvider.db.insertUser(response.usuario!);
+
 				Get.offAllNamed("form_calculation");
 			}else{
 				Get.snackbar("Error", "wrong_try_again".tr, snackPosition: SnackPosition.BOTTOM);

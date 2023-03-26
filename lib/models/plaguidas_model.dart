@@ -59,6 +59,14 @@ class Plaguicida {
 		"ftb": ftb,
 	};
 
+	Map<String, dynamic> toMapForDb() => {
+		"id": id,
+		"plaguicida": plaguicida,
+		"k": k,
+		"ftt": ftt,
+		"ftb": ftb,
+	};
+
 	@override
 	String toString() => plaguicida!;
 

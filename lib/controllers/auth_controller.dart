@@ -15,8 +15,8 @@ class AuthController extends GetxController{
 
 	@override
 	void onReady() {
-		emailTextController.text = "";
-		passwordTextController.text = "";
+		emailTextController.text = "sergio.tudela@twgroup.cl";
+		passwordTextController.text = "Vl5PBCfR";
 		// checkAuth();
 		super.onReady();
 	}

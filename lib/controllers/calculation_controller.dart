@@ -1,4 +1,6 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'dart:io';
+
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:repla_vinos/models/form_model.dart';
 import 'package:repla_vinos/models/plaguidas_model.dart';
 import 'package:repla_vinos/providers/api_provider.dart';
 import 'package:repla_vinos/providers/db_provider.dart';
+import 'package:http/http.dart' as http;
 
 class CalculationController extends GetxController {
 	final provider = ApiProvider();
@@ -40,7 +43,7 @@ class CalculationController extends GetxController {
 			final DateFormat formatter = DateFormat('yyyy/MM/dd');
 			var fecha = DateFormat('dd/MM/yyyy').parse(fechaTextController.text);
 
-		  	var body = <String, dynamic>{};
+      var body = <String, dynamic>{};
 		
 			body['datos[vinificacion]'] = vinoTextController.value.toString().toUpperCase();
 			body['datos[diametro]'] = diametroTextController.text;
@@ -49,10 +52,22 @@ class CalculationController extends GetxController {
 			body['datos[fecha_aplicacion]'] = formatter.format(fecha);
 			body['datos[so]'] = defaultTargetPlatform.name.toString();
 
-			final connectivityResult = await (Connectivity().checkConnectivity());
+			bool connection = await InternetConnectionCheckerPlus().hasConnection;
 
-			if (connectivityResult == ConnectivityResult.none) {
-				Resultado resultado = _calculo();
+      //Si no hay conexión a internet, se guarda en la base de datos local
+			if (!connection) {
+        FormModel form = FormModel(
+          datosVinificacion: vinoTextController.value.toString().toUpperCase(),
+          datosDiametro: diametroTextController.text,
+          datosPlaguicida: selectedPlaguicida.id.toString(),
+          datosDosis: dosisTextController.text,
+          datosFechaAplicacion: formatter.format(fecha),
+          datosSo: defaultTargetPlatform.name.toString()
+        );
+
+        await DBProvider.db.insertForm(form);
+
+				Resultado resultado = _calculo(form);
 
 				Get.back();
 
@@ -62,15 +77,6 @@ class CalculationController extends GetxController {
 
 				return;
 			}
-
-			// await DBProvider.db.insertForm(FormModel(
-			// 	datosVinificacion: vinoTextController.value.toString().toUpperCase(),
-			// 	datosDiametro: diametroTextController.text,
-			// 	datosPlaguicida: selectedPlaguicida.id.toString(),
-			// 	datosDosis: dosisTextController.text,
-			// 	datosFechaAplicacion: formatter.format(fecha),
-			// 	datosSo: defaultTargetPlatform.name.toString()
-			// ));
 
 			final response = await provider.calculo(body);
 
@@ -91,10 +97,21 @@ class CalculationController extends GetxController {
 		}
 	}
 
-	Resultado _calculo() {
+	Resultado _calculo(FormModel form) {
+    //Aqui va la formula
+
+
+
+
+
+
+
+
+
+
+
+    //Aqui va la respuesta
 		var resultado = Resultado();
-
-
 
 		resultado.titulo = "Azoxystrobin";
 		resultado.txtBq1 = [

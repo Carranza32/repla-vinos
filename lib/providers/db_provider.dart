@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:repla_vinos/models/form_model.dart';
 import 'package:repla_vinos/models/plaguidas_model.dart';
 import 'package:repla_vinos/models/user_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 class DBProvider {
 	static const _databaseName = 'repla_vinos.db';
@@ -22,51 +24,95 @@ class DBProvider {
   	}
 
   	Future<Database> initDB() async{
-		//getPath database
-		Directory documentDirectory = await getApplicationDocumentsDirectory();
-		final path = join(documentDirectory.path, _databaseName);
+      Database db;
 
-		print("DB Location: " + path);
+      if (kIsWeb) {
+        var factory_web = databaseFactoryFfiWeb;
+        db = await factory_web.openDatabase(join(".", _databaseName));
 
-		//Crear db
-		return await openDatabase(
-			path,
-			version: _databaseVersion,
-			onOpen: (db) {},
-			onCreate: (Database db, int version) async {
-				await db.execute('''
-						CREATE TABLE IF NOT EXISTS user (
-							id INTEGER PRIMARY KEY AUTOINCREMENT,
-							llave_api TEXT,
-							nombre TEXT,
-							email TEXT
-						);
-				''');
+        var sqliteVersion = (await db.rawQuery('select sqlite_version()')).first.values.first;
+        print(sqliteVersion);
+        print("DB Location: " + db.path);
 
-				await db.execute('''
-						CREATE TABLE IF NOT EXISTS form (
-							id INTEGER PRIMARY KEY AUTOINCREMENT,
-							vinificacion TEXT,
-							diametro TEXT,
-							plaguicida INTEGER,
-							dosis TEXT,
-							fechaAplicacion TEXT,
-							so TEXT
-						);
-				''');
-				
-				await db.execute('''
-						CREATE TABLE IF NOT EXISTS plaguicidas (
-							id TEXT,
-							plaguicida TEXT,
-							k TEXT,
-							ftt TEXT,
-							ftb TEXT
-						);
-				''');
-			}
-		);
+        await db.execute('''
+                CREATE TABLE IF NOT EXISTS user (
+                  id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  llave_api TEXT,
+                  nombre TEXT,
+                  email TEXT
+                );
+            ''');
 
+            await db.execute('''
+                CREATE TABLE IF NOT EXISTS form (
+                  id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  vinificacion TEXT,
+                  diametro TEXT,
+                  plaguicida INTEGER,
+                  dosis TEXT,
+                  fechaAplicacion TEXT,
+                  so TEXT
+                );
+            ''');
+            
+            await db.execute('''
+                CREATE TABLE IF NOT EXISTS plaguicidas (
+                  id TEXT,
+                  plaguicida TEXT,
+                  k TEXT,
+                  ftt TEXT,
+                  ftb TEXT
+                );
+            ''');
+        
+      } else {
+        //getPath database
+        Directory documentDirectory = await getApplicationDocumentsDirectory();
+        final path = join(documentDirectory.path, _databaseName);
+
+        print("DB Location: " + path);
+
+        //Crear db
+        db = await openDatabase(
+          path,
+          version: _databaseVersion,
+          onOpen: (db) {},
+          onCreate: (Database db, int version) async {
+            await db.execute('''
+                CREATE TABLE IF NOT EXISTS user (
+                  id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  llave_api TEXT,
+                  nombre TEXT,
+                  email TEXT
+                );
+            ''');
+
+            await db.execute('''
+                CREATE TABLE IF NOT EXISTS form (
+                  id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  vinificacion TEXT,
+                  diametro TEXT,
+                  plaguicida INTEGER,
+                  dosis TEXT,
+                  fechaAplicacion TEXT,
+                  so TEXT
+                );
+            ''');
+            
+            await db.execute('''
+                CREATE TABLE IF NOT EXISTS plaguicidas (
+                  id TEXT,
+                  plaguicida TEXT,
+                  k TEXT,
+                  ftt TEXT,
+                  ftb TEXT
+                );
+            ''');
+          }
+        );
+      }
+
+      return db;
   	}
 
 	Future<int?> insertUser(Usuario model) async{
@@ -79,8 +125,9 @@ class DBProvider {
 	Future<Usuario?> getUser() async {
 		final db = await database;
 		final res = await db?.query('user');
+    print(res!);
 
-		return res!.isNotEmpty ? Usuario.fromJson(res.first) : null;
+		return res.isNotEmpty ? Usuario.fromJson(res.first) : null;
 	}
 
 	Future<int> updateUser(Usuario model) async {

@@ -98,7 +98,7 @@ class CalculationController extends GetxController {
 	}
 
 	Resultado _calculo(FormModel form) {
-    //Aqui va la formula
+    //Aqui va la formula los datos te los tre el form model todos sus atributos son tipo string
 
 
 

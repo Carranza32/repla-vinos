@@ -42,6 +42,21 @@ InputDecoration authFormFieldStyle() => const InputDecoration(
 	),
 );
 
+InputDecoration authFormWhiteFieldStyle() => const InputDecoration(
+	iconColor: Color(0xffffffff),
+	prefixIconColor: Color(0xffffffff),
+	suffixIconColor: Color(0xffffffff),
+	floatingLabelStyle: TextStyle(color: Color(0xffffffff)),
+	// prefixIcon: Icon(Icons.calendar_today, color: Color(0xff111b31)),
+	focusedBorder: OutlineInputBorder(
+		borderSide: BorderSide(color: Color(0xffffffff), width: 2.0),
+		borderRadius: BorderRadius.all(Radius.circular(15)),
+	),
+	border: OutlineInputBorder(
+		borderRadius: BorderRadius.all(Radius.circular(15)),
+	),
+);
+
 InputDecoration formFieldStyle() => const InputDecoration(
 	// prefixIcon: Icon(Icons.calendar_today, color: Color(0xff111b31)),
 	iconColor: Color(0xff111b31),

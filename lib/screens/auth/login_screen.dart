@@ -69,7 +69,7 @@ class LoginScreen extends StatelessWidget {
 									RotatedBox(
 										quarterTurns: 0,
 										child: Image.asset(
-											'assets/132033-green-login.gif',
+											'assets/animation_500_lft97u10.gif',
 											height: size.height * 0.5,
 											width: double.infinity,
 											fit: BoxFit.contain,
@@ -77,7 +77,7 @@ class LoginScreen extends StatelessWidget {
 									),
 
 									Image.asset(
-										'assets/Logos_frase01.jpg',
+										'assets/Logos_frase01bg.png',
 										height: 140,
 										width: 400,
 									),
@@ -231,7 +231,7 @@ class LoginScreen extends StatelessWidget {
 								),
 
 								/// Login Button
-								loginButton(),
+								loginButton(isWhite: true),
 								SizedBox(
 									height: size.height * 0.03,
 								),
@@ -415,13 +415,13 @@ class LoginScreen extends StatelessWidget {
 	}
 
 	// Login Button
-	Widget loginButton() {
+	Widget loginButton({bool isWhite = false}) {
 		return SizedBox(
 			width: double.infinity,
 			height: 55,
 			child: ElevatedButton(
 				style: ElevatedButton.styleFrom(
-					backgroundColor: const Color(0xffa3fb82),
+					backgroundColor: (isWhite) ? Colors.white : const Color(0xffa3fb82),
 					shape: RoundedRectangleBorder(
 						borderRadius: BorderRadius.circular(15),
 					),

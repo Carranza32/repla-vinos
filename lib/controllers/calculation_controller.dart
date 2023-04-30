@@ -69,7 +69,7 @@ class CalculationController extends GetxController {
 
         await DBProvider.db.insertForm(form);
 
-				Resultado resultado = _calculo(form);
+				Resultado resultado = _calculo(form, selectedPlaguicida);
 
 				Get.back();
 
@@ -99,13 +99,13 @@ class CalculationController extends GetxController {
 		}
 	}
 
-	Resultado _calculo(FormModel form) {
+	Resultado _calculo(FormModel form, Plaguicida plaguicida) {
 
 
   //Estas variables no vienen en form y son necesarias.
-    double k = 10;
-    double ftt = 10;
-    double ftb = 10;
+    double k = double.tryParse(plaguicida.k ?? "0") ?? 0;
+    double ftt = double.tryParse(plaguicida.ftt ?? "0") ?? 0;
+    double ftb = double.tryParse(plaguicida.ftb ?? "0") ?? 0;
     
     final VALCMA = 1.97832;
     final VALCMB = 0.0018; 

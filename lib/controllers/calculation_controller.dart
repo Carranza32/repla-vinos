@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
@@ -12,6 +13,7 @@ import 'package:repla_vinos/models/plaguidas_model.dart';
 import 'package:repla_vinos/providers/api_provider.dart';
 import 'package:repla_vinos/providers/db_provider.dart';
 import 'package:http/http.dart' as http;
+import 'dart:math';
 
 class CalculationController extends GetxController {
 	final provider = ApiProvider();
@@ -98,41 +100,80 @@ class CalculationController extends GetxController {
 	}
 
 	Resultado _calculo(FormModel form) {
-    //Aqui va la formula los datos te los tre el form model todos sus atributos son tipo string
 
 
+  //Estas variables no vienen en form y son necesarias.
+    double k = 10;
+    double ftt = 10;
+    double ftb = 10;
+    
+    final VALCMA = 1.97832;
+    final VALCMB = 0.0018; 
+    final VALCMC = -0.14544;
 
+    double LMR_1 = 0.1; 
+    double LMR_2 = 0.05; 
+    double LMR_3 = 0.01; 
+    double LMR_4 = 0.04;
 
+    double diametro = form.datosDiametro as double;
+    double dosis = form.datosDosis as double;
+    double cm = 0.0;
+    
+		cm = VALCMA + (VALCMB * dosis)+(VALCMC * diametro);
 
+		if(cm <= 3){k = k/0.4;}
+    else if(cm <= 4.5){k = k/0.7;}
+    else{k = k;}
 
+    //******** LMR / FTT o FTB / CM ********//
+		double ftx = (form.datosVinificacion == 'TINTO' ? ftt : ftb);
+		cm = (cm <= 0 ? 1 : cm);
+		ftx = (ftx <= 0 ? 1 : ftx);
+		LMR_1 = (LMR_1 <= 0 ? 1 : LMR_1);
 
+		
+		double dias_p1 = log(LMR_1) - log(ftx) + log(cm);
+		double dias_p2 = log(LMR_2) - log(ftx) + log(cm);
+		double dias_p3 = log(LMR_3) - log(ftx) + log(cm);
+		double dias_p4 = log(LMR_4) - log(ftx) + log(cm);
 
+		double dias_q1 = (dias_p1)/(k *-1);
+		double dias_q3 = (dias_p3)/(k *-1);
+		double dias_q4 = (dias_p4)/(k *-1);
+		double dias_q2 = (dias_p2)/(k *-1);
 
+    DateTime appdate = DateTime.parse(form.datosFechaAplicacion);
+    DateTime fecha_1 = appdate.subtract(Duration(days: dias_q1.round()));
+    DateTime fecha_2 = appdate.subtract(Duration(days: dias_q2.round()));
+    DateTime fecha_3 = appdate.subtract(Duration(days: dias_q3.round()));
+    DateTime fecha_4 = appdate.subtract(Duration(days: dias_q4.round()));
 
 
     //Aqui va la respuesta
 		var resultado = Resultado();
 
-		resultado.titulo = "Azoxystrobin";
+		resultado.titulo = form.datosPlaguicida;
 		resultado.txtBq1 = [
 			"Nivel aproximado de residuo en vino ",
-			"TINTO",
+			form.datosVinificacion,
 			" en base a fecha de cosecha estimada. "
 		];
 
 		resultado.txtBq2 = [
 			"Resultados obtenidos en base a la fecha de aplicación ",
-			"20-01-2023",
+			DateFormat('dd-MM-yyyy').format(form.datosFechaAplicacion as DateTime),
 			", uva ",
-			"20(mm)",
+			"${form.datosDiametro}(mm)",
 			" y dosis ",
-			"20(g activo/ha)."
+			"${form.datosDosis}(g activo/ha)."
 		];
 
-		resultado.f1 = "0.1 (mg/kg) 22-01-2023";
-		resultado.f2 = "0.05 (mg/kg) 20-02-2023";
-		resultado.f3 = "0.01 (mg/kg) 28-04-2023";
-		resultado.f4 = "0.04 (mg/kg) 01-03-2023";
+  	resultado.f1 = "$LMR_1 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_1)}";
+    resultado.f2 = "$LMR_2 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_2)}";
+    resultado.f3 = "$LMR_3 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_3)}";
+    resultado.f4 = "$LMR_4 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_4)}";
+	
 		resultado.pie = "Las fechas de cosecha son referenciales y han sido obtenidas a partir de curvas de disperción en campo y estudios de traspaso de residuos de poluguicidas en el proceso de vinificación.";
 
 		return resultado;

@@ -102,52 +102,57 @@ class CalculationController extends GetxController {
 	Resultado _calculo(FormModel form) {
 
 
-  //Estas variables no vienen en form y son necesarias.
-    double k = 10;
-    double ftt = 10;
-    double ftb = 10;
-    
-    final VALCMA = 1.97832;
-    final VALCMB = 0.0018; 
-    final VALCMC = -0.14544;
+	//Estas variables no vienen en form y son necesarias.
+	double k = 0.024;
+	double ftt = 0.105;
+	double ftb = 0.160;
 
-    double LMR_1 = 0.1; 
-    double LMR_2 = 0.05; 
-    double LMR_3 = 0.01; 
-    double LMR_4 = 0.04;
+	final VALCMA = 1.97832;
+	final VALCMB = 0.0018; 
+	final VALCMC = -0.14544;
 
-    double diametro = form.datosDiametro as double;
-    double dosis = form.datosDosis as double;
-    double cm = 0.0;
-    
-		cm = VALCMA + (VALCMB * dosis)+(VALCMC * diametro);
+	double LMR_1 = 0.1; 
+	double LMR_2 = 0.05; 
+	double LMR_3 = 0.01; 
+	double LMR_4 = 0.04;
 
-		if(cm <= 3){k = k/0.4;}
-    else if(cm <= 4.5){k = k/0.7;}
-    else{k = k;}
+	double diametro = double.parse(form.datosDiametro);
+	double dosis = double.parse(form.datosDosis);
+	double cm = 0.0;
 
-    //******** LMR / FTT o FTB / CM ********//
-		double ftx = (form.datosVinificacion == 'TINTO' ? ftt : ftb);
-		cm = (cm <= 0 ? 1 : cm);
-		ftx = (ftx <= 0 ? 1 : ftx);
-		LMR_1 = (LMR_1 <= 0 ? 1 : LMR_1);
+	cm = VALCMA + (VALCMB * dosis)+(VALCMC * diametro);
 
-		
-		double dias_p1 = log(LMR_1) - log(ftx) + log(cm);
-		double dias_p2 = log(LMR_2) - log(ftx) + log(cm);
-		double dias_p3 = log(LMR_3) - log(ftx) + log(cm);
-		double dias_p4 = log(LMR_4) - log(ftx) + log(cm);
+	if(cm <= 3){k = k/0.4;}
+	else if(cm <= 4.5){k = k/0.7;}
+	else{k = k;}
 
-		double dias_q1 = (dias_p1)/(k *-1);
-		double dias_q3 = (dias_p3)/(k *-1);
-		double dias_q4 = (dias_p4)/(k *-1);
-		double dias_q2 = (dias_p2)/(k *-1);
+	//******** LMR / FTT o FTB / CM ********//
+	double ftx = (form.datosVinificacion == 'TINTO' ? ftt : ftb);
+	cm = (cm <= 0 ? 1 : cm);
+	//ftx = (ftx <= 0 ? 1 : ftx);
+	//LMR_1 = (LMR_1 <= 0 ? 1 : LMR_1);
 
-    DateTime appdate = DateTime.parse(form.datosFechaAplicacion);
-    DateTime fecha_1 = appdate.subtract(Duration(days: dias_q1.round()));
-    DateTime fecha_2 = appdate.subtract(Duration(days: dias_q2.round()));
-    DateTime fecha_3 = appdate.subtract(Duration(days: dias_q3.round()));
-    DateTime fecha_4 = appdate.subtract(Duration(days: dias_q4.round()));
+
+	double dias_p1 = log(LMR_1) - log(ftx) + log(cm);
+	double dias_p2 = log(LMR_2) - log(ftx) + log(cm);
+	double dias_p3 = log(LMR_3) - log(ftx) + log(cm);
+	double dias_p4 = log(LMR_4) - log(ftx) + log(cm);
+
+	double dias_q1 = (dias_p1)/(k *-1);
+	double dias_q3 = (dias_p3)/(k *-1);
+	double dias_q4 = (dias_p4)/(k *-1);
+	double dias_q2 = (dias_p2)/(k *-1);
+
+	List<String> dateSplit = form.datosFechaAplicacion.split('/');
+	String day = dateSplit[2].toString();
+	String month = dateSplit[1].toString(); 
+	String year = dateSplit[0].toString();
+
+	DateTime appdate = DateTime.parse('$year-$month-$day');
+	DateTime fecha_1 = appdate.add(Duration(days: dias_q1.round()));
+	DateTime fecha_2 = appdate.add(Duration(days: dias_q2.round()));
+	DateTime fecha_3 = appdate.add(Duration(days: dias_q3.round()));
+	DateTime fecha_4 = appdate.add(Duration(days: dias_q4.round()));
 
 
     //Aqui va la respuesta
@@ -162,18 +167,18 @@ class CalculationController extends GetxController {
 
 		resultado.txtBq2 = [
 			"Resultados obtenidos en base a la fecha de aplicación ",
-			DateFormat('dd-MM-yyyy').format(form.datosFechaAplicacion as DateTime),
+			form.datosFechaAplicacion,
 			", uva ",
 			"${form.datosDiametro}(mm)",
 			" y dosis ",
 			"${form.datosDosis}(g activo/ha)."
 		];
 
-  	resultado.f1 = "$LMR_1 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_1)}";
-    resultado.f2 = "$LMR_2 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_2)}";
-    resultado.f3 = "$LMR_3 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_3)}";
-    resultado.f4 = "$LMR_4 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_4)}";
-	
+		resultado.f1 = "$LMR_1 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_1)}";
+		resultado.f2 = "$LMR_2 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_2)}";
+		resultado.f3 = "$LMR_3 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_3)}";
+		resultado.f4 = "$LMR_4 (mg/kg) ${DateFormat('dd-MM-yyyy').format(fecha_4)}";
+		
 		resultado.pie = "Las fechas de cosecha son referenciales y han sido obtenidas a partir de curvas de disperción en campo y estudios de traspaso de residuos de poluguicidas en el proceso de vinificación.";
 
 		return resultado;

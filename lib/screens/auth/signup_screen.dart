@@ -164,7 +164,10 @@ class SignUpScreen extends StatelessWidget {
 		  						decoration: authFormFieldStyle().copyWith(
 		  							prefixIcon: const Icon(Icons.person, color: Color(0xff4bbf78)),
 		  							labelText: 'name'.tr,
-		  							hintText: 'name_hint'.tr,									
+		  							hintText: 'name_hint'.tr,	
+									fillColor: Colors.white,
+									filled: true,
+								
 		  						),
 
 		  						controller: authController.nameTextController,
@@ -183,6 +186,9 @@ class SignUpScreen extends StatelessWidget {
 		  							prefixIcon: const Icon(Icons.email_rounded, color: Color(0xff4bbf78)),
 		  							hintText: 'Ingrese su email',
 		  							labelText: 'Email',
+									fillColor: Colors.white,
+									filled: true,
+
 		  						),
 		  						// The validator receives the text that the user has entered.
 		  						validator: (value) => (value!.isMyEmail) ? null : 'email_wrong'.tr,
@@ -201,6 +207,9 @@ class SignUpScreen extends StatelessWidget {
 		  							prefixIcon: const Icon(Icons.lock_open, color: Color(0xff4bbf78)),
 		  							labelText: "password".tr,
 		  							hintText: "password_hint".tr,
+									fillColor: Colors.white,
+									filled: true,
+
 		  						),
 		  						// The validator receives the text that the user has entered.
 		  						validator: (value) => (value!.isMinString) ? null : 'digits'.tr
@@ -224,30 +233,7 @@ class SignUpScreen extends StatelessWidget {
 		  						height: size.height * 0.03,
 		  					),
 
-		  						/// Navigate To Login Screen
-		  						GestureDetector(
-		  							onTap: () {
-		  								Get.toNamed("login");
-
-		  								authController.emailTextController.clear();
-		  								authController.nameTextController.clear();
-		  								authController.passwordTextController.clear();
-
-		  								_formKey.currentState?.reset();
-		  							},
-		  							child: RichText(
-		  								text: TextSpan(
-		  									text: 'account_exists'.tr,
-		  									style: kHaveAnAccountStyle(size),
-		  									children: [
-		  										TextSpan(
-		  											text: " ${"login".tr}",
-		  											style: kLoginOrSignUpTextStyle(size)
-												),
-		  									],
-		  								),
-		  							),
-		  						),
+		  						loginButton(isWhite: true),
 		  					],
 		  				),
 		  			),
@@ -417,6 +403,32 @@ class SignUpScreen extends StatelessWidget {
 					}
 				},
 				child: Text('sign_up'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
+			),
+		);
+	}
+
+	// Login Button
+	Widget loginButton({bool isWhite = false}) {
+		return SizedBox(
+			width: double.infinity,
+			height: 55,
+			child: ElevatedButton(
+				style: ElevatedButton.styleFrom(
+					backgroundColor: (isWhite) ? Colors.white : const Color(0xffa3fb82),
+					shape: RoundedRectangleBorder(
+						borderRadius: BorderRadius.circular(15),
+					),
+				),
+				onPressed: () {
+					Get.toNamed("login");
+
+					authController.emailTextController.clear();
+					authController.nameTextController.clear();
+					authController.passwordTextController.clear();
+
+					_formKey.currentState?.reset();
+				},
+				child: Text('login_button'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
 			),
 		);
 	}

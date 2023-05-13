@@ -168,6 +168,8 @@ class LoginScreen extends StatelessWidget {
 										prefixIcon: const Icon(Icons.person, color: Color(0xff4bbf78),),
 										labelText: 'email'.tr,
 										hintText: 'email_hint'.tr,
+										fillColor: Colors.white,
+										filled: true,
 									),
 									controller: authController.emailTextController,
 									validator: (value) => (value!.isMyEmail) ? null : 'email_wrong'.tr,
@@ -186,6 +188,8 @@ class LoginScreen extends StatelessWidget {
 										prefixIcon: const Icon(Icons.lock_open, color: Color(0xff4bbf78)),
 										labelText: "password".tr,
 										hintText: "password_hint".tr,
+										fillColor: Colors.white,
+										filled: true,
 									),
 									// The validator receives the text that the user has entered.
 									// validator: (value) => (value!.isMinString) ? null : 'Debe ser un número de 8 dígitos.'
@@ -211,6 +215,9 @@ class LoginScreen extends StatelessWidget {
 													text: " ${"recuperate_password".tr}",
 													style: kLoginOrSignUpTextStyle(
 														size,
+													).copyWith(
+														color: Colors.white,
+														decoration: TextDecoration.underline,
 													),
 												),
 											],
@@ -236,31 +243,7 @@ class LoginScreen extends StatelessWidget {
 									height: size.height * 0.03,
 								),
 
-								// Navigate To Register Screen
-								GestureDetector(
-									onTap: () {
-										Get.toNamed("signup");
-
-										authController.emailTextController.clear();
-										authController.passwordTextController.clear();
-										
-										_formKey.currentState?.reset();
-									},
-									child: RichText(
-										text: TextSpan(
-											text: 'account_exists'.tr,
-											style: kHaveAnAccountStyle(size),
-											children: [
-												TextSpan(
-													text: " ${"register".tr}",
-													style: kLoginOrSignUpTextStyle(
-														size,
-													),
-												),
-											],
-										),
-									),
-								),								
+								registerButton(isWhite: true),							
 							],
 						),
 					),
@@ -432,6 +415,31 @@ class LoginScreen extends StatelessWidget {
 					}
 				},
 				child: Text('login_button'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
+			),
+		);
+	}
+
+	// Register Button
+	Widget registerButton({bool isWhite = false}) {
+		return SizedBox(
+			width: double.infinity,
+			height: 55,
+			child: ElevatedButton(
+				style: ElevatedButton.styleFrom(
+					backgroundColor: (isWhite) ? Colors.white : const Color(0xffa3fb82),
+					shape: RoundedRectangleBorder(
+						borderRadius: BorderRadius.circular(15),
+					),
+				),
+				onPressed: () {
+					Get.toNamed("signup");
+
+					authController.emailTextController.clear();
+					authController.passwordTextController.clear();
+					
+					_formKey.currentState?.reset();
+				},
+				child: Text('register'.tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff111b31))),
 			),
 		);
 	}

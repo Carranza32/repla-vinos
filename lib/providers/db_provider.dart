@@ -64,6 +64,12 @@ class DBProvider {
                   ftb TEXT
                 );
             ''');
+
+            await db.execute('''
+                CREATE TABLE IF NOT EXISTS last_plaguicidas_updated (
+						updated_at DATETIME
+                );
+            ''');
         
       } else {
         //getPath database
@@ -106,6 +112,12 @@ class DBProvider {
                   k TEXT,
                   ftt TEXT,
                   ftb TEXT
+                );
+            ''');
+
+				await db.execute('''
+                CREATE TABLE IF NOT EXISTS last_plaguicidas_updated (
+						updated_at DATETIME
                 );
             ''');
           }
@@ -151,6 +163,13 @@ class DBProvider {
 		return res;
 	}
 
+	Future<int> deleteAllPlagicidas() async {
+		final db = await database;
+		final res = await db!.rawDelete('DELETE FROM plaguicidas');
+
+		return res;
+	}
+
 	Future<List<Plaguicida>?> getAllPlagicidas() async {
 		final db = await database;
 		final res = await db!.query('plaguicidas');
@@ -163,6 +182,20 @@ class DBProvider {
 	Future<int> deleteUser() async {
 		final db  = await database;
 		final res = await db!.rawDelete('DELETE FROM user');
+		return res;
+	}
+
+	Future<DateTime> getLastPlaguicidasUpdated() async {
+		final db = await database;
+		final res = await db!.query('last_plaguicidas_updated');
+
+		return res.isNotEmpty ? DateTime.parse(res.first['updated_at'].toString()) : DateTime.now();
+	}
+
+	Future<int> updateLastPlaguicidasUpdated() async {
+		final db = await database;
+		final res = await db!.rawUpdate('UPDATE last_plaguicidas_updated SET updated_at = ?', [DateTime.now().toString()]);
+
 		return res;
 	}
 }

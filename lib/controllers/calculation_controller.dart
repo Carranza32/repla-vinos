@@ -1,6 +1,4 @@
 
-import 'dart:io';
-
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/foundation.dart';
